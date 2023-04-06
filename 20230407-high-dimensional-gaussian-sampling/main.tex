@@ -84,8 +84,8 @@ Covariance matrix \(\B{\Sigma}\) positive definite. Precision matrix \(\B{Q}=\B{
 \end{algorithm}
 Problem: 
 \begin{itemize}
-\item Storage requirement \(\Theta(d^2)\).
-\item Computational cost \(\mathcal{O}(d^3 + d^2T)\) (\(T\) is the number of samples), only when \(\B{Q}\) is unchanged.
+\item Computational cost \textcolor{red}{\(\mathcal{O}(d^3 + d^2T)\)} (\(T\) is the number of samples), only when \(\B{Q}\) is unchanged.
+\item Storage requirement \textcolor{red}{\(\Theta(d^2)\)}.
 \end{itemize}
 \end{frame}
 
@@ -98,7 +98,11 @@ Problem:
     \item Matrix Splitting: A generalization of Gibbs Sampler.
     \item Data Augmentation: Introduce auxiliary variable.
 \end{itemize}
-Improvement: computational cost $\mathcal{O}(d^2T)$ and storage requirement $\Theta(d)$.
+Improvement: 
+\begin{itemize}
+\item Computational cost \textcolor{red}{$\mathcal{O}(Kd^2T)$} (\(K\) is the number of iterations), or \textcolor{red}{$\mathcal{O}(d^2(T+T_{bi}))$} (\(T_{bi}\) is the number of burn-in samples).
+\item Storage requirement \textcolor{red}{\(\Theta(d)\)}.
+\end{itemize}
 \end{frame}
 
 \subsection{Guidelines}
@@ -149,21 +153,206 @@ Improvement: computational cost $\mathcal{O}(d^2T)$ and storage requirement $\Th
 \end{tikzpicture}
 \end{frame}
 
+\subsection{Example}
+\begin{frame}
+\frametitle{Bayesian Ridge Regression}
+Conditional prior for $\Bs{\theta}$: Gaussian i.i.d.,
+\[
+\begin{aligned}
+p(\Bs{\theta}\mid\tau) &\propto \exp\pr{-\frac{1}{2\tau}||\Bs{\theta}||^2},\\
+p(\tau) &\propto \dfrac{1}{\tau}\Bs{1}_{\mathbb{R}_+\setminus\{0\}}(\tau).
+\end{aligned}
+\]
+Posterior: 
+\[
+  \begin{aligned}
+    p(\Bs{\theta},\tau \mid \B{y}) \propto \dfrac{1}{\tau}\Bs{1}_{\mathbb{R}_+\setminus\{0\}}(\tau) \ \exp\Big(-\frac{1}{2\tau}||\Bs{\theta}||^2 - \frac{1}{2\sigma^2}||\B{y}-\B{X}\Bs{\theta}||^2\Big).
+  \end{aligned}
+\]
+\end{frame}
+
+\begin{frame}
+\frametitle{Bayesian Ridge Regression (Cont.d)}
+Conditional posterior distribution associated to $\Bs{\theta}$: Gaussian with precision matrix and mean vector
+\[
+  \begin{aligned}
+    &\B{Q} = \frac{1}{\sigma^{2}}\B{X}^{\top}\B{X} + \tau^{-1}\B{I}_d, \\
+    &\Bs{\mu} = \frac{1}{\sigma^{2}} \B{Q}^{-1}\B{X}^{\top}\B{y}. 
+  \end{aligned} 
+\]
+\begin{figure}
+    \centering
+    \mbox{{\includegraphics[scale=0.15]{src/images/MNIST_AA.pdf}}}
+    \mbox{{\includegraphics[scale=0.15]{src/images/Armstrong_AA.pdf}}}
+    \mbox{{\includegraphics[scale=0.15]{src/images/Coepra_AA.pdf}}}
+    \caption{Examples of precision matrices $\B{X}^{\top}\B{X}$ for the MNIST, leukemia abd CoEPrA datasets.}
+    \label{fig:LASSO_example}
+\end{figure}
+\end{frame}
+
 \section{Sampling Algorithms Derived From Numerical Algebra}
 \subsection{Polynomial Approximation}
 \begin{frame}
-\frametitle{1}
+\frametitle{Square Root Factorization}
+Extension of Cholesky sampler:
+\begin{enumerate}
+    \item $\B{Q} = \B{U}\B{\Lambda}\B{U^{\top}}$. 
+    \item $\B{Q} = \B{B}^2$ with $\B{B} = \B{U}\B{\Lambda}^{1/2}\B{U^{\top}}$.\item $\B{z} \sim \mathcal{N}(\B{0}_d,\B{I}_d)$.
+    \item Solve $\B{B}\B{w} = \B{z}$ w.r.t. $\B{w}$ and compute $\Bs{\theta} = \Bs{\mu} + \B{w}$.
+\end{enumerate}
+We have $f(\B{Q}) = \B{U}f(\B{\Lambda})\B{U}^{\top}$ for real continuous \(f\).
+
+Approximate \(f(\lambda_i) \approx 1/\sqrt{\lambda_i}, \quad \forall i \in [d]\) with Chebyshev polynomials.
 \end{frame}
+
+\begin{frame}
+\frametitle{Chebyshev Sampler}
+The change of interval:
+\[g_j = \br{\cos\pr{\pi\frac{2j+1}{2K_{\mathrm{cheby}}}}\dfrac{(\lambda_u-\lambda_l)}{2} + \dfrac{\lambda_u+\lambda_l}{2}}^{-1/2}, \quad j \in [0,K_{\mathrm{cheby}}].\]
+The Chebyshev coefficients:
+\[c_k = \dfrac{2}{K_{\mathrm{cheby}}} \displaystyle \sum_{j=0}^{K_{\mathrm{cheby}}} g_j \cos\pr{\pi k\frac{2j+1}{2K_{\mathrm{cheby}}}}, \quad k \in [0,K_{\mathrm{cheby}}]. \]
+\end{frame}
+
+\begin{frame}
+\frametitle{Chebyshev Sampler}
+\begin{algorithm}[H]
+\caption{Approx.\ square root sampler using Chebyshev polynomials}
+\begin{algorithmic}[1] 
+\State Draw $\B{z} \sim \mathcal{N}(\B{0}_d,\B{I}_d)$.
+\State Set $\alpha = \dfrac{2}{\lambda_u-\lambda_l}$ and $\beta = \dfrac{\lambda_u+\lambda_l}{\lambda_u-\lambda_l}$.
+\State Initialize $\B{u}_1 = \alpha\B{Q z} - \beta\B{z}$ and $\B{u}_0 = \B{z}$. 
+\State Set $\B{u} = \dfrac{1}{2}c_0\B{u}_0 + c_1\B{u}_1$ and $k=2$.
+\While{$k \leq K_{\mathrm{cheby}}$} \Comment{\textcolor{blue}{Compute the $K_{\mathrm{cheby}}$-truncated Chebyshev series.}}
+\State Compute $\B{u}' = 2(\alpha\B{Q}\B{u}_1 - \beta\B{u}_1) - \B{u}_0$.
+\State Set $\B{u} = \B{u} + c_k\B{u}'$.
+\State Set $\B{u}_0 = \B{u}_1$ and $\B{u}_1 = \B{u}'$.
+\State $k = k + 1$.
+\EndWhile    
+\end{algorithmic}
+\end{algorithm}
+\end{frame}
+
 \subsection{Conjugate Gradient-Based Samplers}
 \begin{frame}
-\frametitle{1}
+\frametitle{Perturbation before Optimization}
+Rewrite in \textit{information form}:
+\[
+  \pi(\Bs{\theta}) \propto \exp\pr{-\dfrac{1}{2}\Bs{\theta}^{\top}\B{Q}\Bs{\theta} + \B{b}^{\top}\Bs{\theta}},
+\]
+where $\B{b} = \B{Q}\Bs{\mu}$.
+\begin{enumerate}
+    \item Draw a Gaussian vector $\B{z}' \sim \mathcal{N}(\B{0}_d,\B{Q})$.
+    \item Solve a linear system \(\B{Q}\Bs{\theta} = \B{Q}\Bs{\mu} + \B{z}'\) using conjugate gradient methods. (If $\B{u} \sim \mathcal{N}(\B{Q}\Bs{\mu},\B{Q})$, then $\B{Q}^{-1}\B{u} \sim \mathcal{N}(\Bs{\mu},\B{Q}^{-1})$.)
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Optimization with Perturbation}
+The linear system we solved
+\[\B{Q}\Bs{\theta} = \B{b} + \B{z}'\]
+can also be seen as a perturbed version of the linear system
+\[\B{Q}\Bs{\theta} = \B{b},\]
+where $\B{b} = \B{Q}\Bs{\mu}$.
+
+Add a perturbation step (a univariate Gaussian sampling step) to turn the classical CG solver into a CG sampler.
+
+Sequentially builds a Gaussian vector with a covariance matrix being the best $k$-rank approximation of $\B{Q}^{-1}$ in the Krylov subspace $\mathcal{K}_k(\B{Q},\B{r}^{(0)})$. 
+\end{frame}
+
+\begin{frame}
+\frametitle{CG Sampler}
+\begin{algorithmic}[1]
+    \State Set $k=1$, $\B{r}^{(0)} = \B{c} - \B{Q}\Bs{\omega}^{(0)}$, $\B{h}^{(0)} = \B{r}^{(0)}$, $d^{(0)} = \B{h}^{(0)\top}\B{Qh}^{(0)}$ and $\B{y}^{(0)} = \Bs{\omega}^{(0)}$. 
+    \While{$\nr{\B{r}^{(k)}} \geq \epsilon$} 
+    \State Set $\gamma^{(k-1)} = \dfrac{\B{r}^{(k-1)\top}\B{r}^{(k-1)}}{d^{(k-1)}}$.
+    \State Set $\B{r}^{(k)} = \B{r}^{(k-1)} - \gamma^{(k-1)}\B{Qh}^{(k-1)}$.
+    \State Set $\eta^{(k)} = -\dfrac{\B{r}^{(k)\top}\B{r}^{(k)}}{\B{r}^{(k-1)T}\B{r}^{(k-1)}}$.
+    \State Set $\B{h}^{(k)} = \B{r}^{(k)} - \eta^{(k)}\B{h}^{(k-1)}$.
+    \State Set $d^{(k)} = \B{h}^{(k)\top}\B{Qh}^{(k)}$.
+    \State Set $\B{y}^{(k)} = \B{y}^{(k-1)} + \dfrac{z}{\sqrt{d^{(k-1)}}}\B{h}^{(k-1)}$ where $z \sim \mathcal{N}(0,1)$. \Comment{\textcolor{blue}{Perturbation}} 
+    \State $k = k + 1$.
+    \EndWhile
+    \State Set $\Bs{\theta} = \Bs{\mu} + \B{y}^{(K_{\mathrm{CG}})}$ where $K_{\mathrm{CG}}$ is the number of CG iterations.\\
+\Return $\Bs{\theta}$.
+\end{algorithmic}
 \end{frame}
 
 \section{Sampling Algorithms Based On MCMC}
 \subsection{Matrix Splitting}
 \begin{frame}
-\frametitle{1}
+\frametitle{Conditional Gaussian Distribution}
+If $\Bs{\theta} \sim \mathcal{N}(\Bs{\mu},\B{Q}^{-1})$, then
+\[
+\begin{aligned}
+\text{E}(\Bs{\theta}_i | \Bs{\theta}_{-i}) &= \Bs{\mu} - \frac{1}{\B{Q}_{ii} }\sum_{j\ne i} \B{Q}_{ij} (\Bs{\theta}_j - \Bs{\mu}_j), \\
+\text{Prec}(\Bs{\theta}_i | \Bs{\theta}_{-i}) &= \B{Q}_{ii}, \\
+\text{Corr}(\Bs{\theta}_i, \Bs{\theta}_j | \Bs{\theta}_{-ij}) &= -\frac{\B{Q}_{ij}}{\sqrt{\B{Q}_{ii}\B{Q}_{jj}}}.
+\end{aligned}
+\]
+Compare the above results with
+\[
+\begin{aligned}
+\text{Var}(\Bs{\theta}_i) &= \Bs{\Sigma}_{ii}, \\
+\text{Corr}(\Bs{\theta}_i, \Bs{\theta}_j) &= \frac{\Bs{\Sigma}_{ij}}{\sqrt{\Bs{\Sigma}_{ii}\Bs{\Sigma}_{jj}}}.
+\end{aligned}
+\]
 \end{frame}
+
+\begin{frame}
+\frametitle{Gibbs Sampler}
+\begin{algorithm}[H]
+\caption{Component-wise Gibbs sampler}
+\label{algo:component_wise_Gibbs}
+\hspace*{\algorithmicindent} \textbf{Input:} Number $T$ of iterations and initialization $\Bs{\theta}^{(0)}$.
+\begin{algorithmic}[1]
+\State Set $t = 1$.
+\While{$t\leq T$}
+    \For{$i \in [d]$}
+    \State Draw $z \sim \mathcal{N}(0,1)$.
+    \State Set $\theta^{(t)}_i = \dfrac{[\B{Q}\Bs{\mu}]_i}{Q_{ii}} + \dfrac{z}{\sqrt{Q_{ii}}} - \dfrac{1}{Q_{ii}}\pr{\displaystyle\sum_{j > i}Q_{ij}\theta_j^{(t-1)} + \displaystyle\sum_{j < i}Q_{ij}\theta_j^{(t)}}$.
+    \EndFor
+    \State Set $t = t + 1$.
+\EndWhile\\
+\Return $\Bs{\theta}^{(T)}$.
+\end{algorithmic}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+\frametitle{Rewrite into Gauss--Seidel Linear Systems}
+Each iteration solves the linear system
+\[(\B{L} + \B{D})\Bs{\theta}^{(t)} = \B{Q}\Bs{\mu} + \B{D}^{1/2}\B{z} - \B{L}^{\top}\Bs{\theta}^{(t-1)},\]
+where $\B{z} \sim \mathcal{N}(\B{0}_d,\B{I}_d)$.
+
+By setting $\B{M} = \B{L}+\B{D}$ and $\B{N} = -\B{L}^{\top}$ so that $\B{Q} = \B{M} - \B{N}$,
+\[
+  \B{M}\Bs{\theta}^{(t)} = \B{Q}\Bs{\mu} +  \tilde{\B{z}}+\B{N}\Bs{\theta}^{(t-1)},
+\]
+where $\B{N} = -\B{L}^{\top}$ is strictly upper triangular and $\tilde{\B{z}} \sim \mathcal{N}(\B{0}_d,\B{D})$ is easy to sample.
+\end{frame}
+
+\begin{frame}
+\frametitle{Other Matrix Splitting Schemes}
+\begin{table}
+{\footnotesize
+\caption{The matrices $\B{D}$ and $\B{L}$ denote the diagonal and strictly lower triangular parts of $\B{Q}$, respectively, and $\omega$ is a positive scalar.}
+\begin{center}
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|c|c|c|c|} 
+    \hline
+    \textbf{Sampler} & $\B{M}$ & $\B{N}$ & $\mathrm{cov}(\tilde{\B{z}}) = \B{M}^{\top} + \B{N}$ & convergence\\
+    \hline 
+    Richardson & $\B{I}_d/\omega$ & $\B{I}_d/\omega - \B{Q}$ & $2\B{I}_d/\omega - \B{Q}$ & $0 < \omega < 2/\nr{\B{Q}}$\\ 
+    Jacobi & $\B{D}$ & $\B{D} - \B{Q}$ & $2\B{D} - \B{Q}$ & $|Q_{ii}| > \sum_{j\neq i}|Q_{ij}|$ $\forall i \in [d]$\\
+    Gauss--Seidel & $\B{D} + \B{L}$ & $-\B{L}^{\top}$ & $\B{D}$ & always\\
+    SOR & $\B{D}/\omega + \B{L}$ & $\frac{1-\omega}{\omega}\B{D} - \B{L}^{\top}$ & $\frac{2-\omega}{\omega}\B{D}$ & $0 < \omega < 2$\\[1em]
+    \hline
+\end{tabular}}
+\end{center}
+}
+\end{table}
+\end{frame}
+
 \subsection{Data Augmentation}
 \begin{frame}
 \frametitle{1}
