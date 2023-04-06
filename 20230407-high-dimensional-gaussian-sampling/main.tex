@@ -27,7 +27,7 @@
 \end{frame}
 
 \section{Introduction} 
-\subsection{Motivation}
+\subsection{Problem}
 \begin{frame}
 \frametitle{Problem Definition}
 Sampling from a \(d\)-dimensional Gaussian distribution \(\mathcal{N}\pr{\Bs{\mu},\B{\Sigma}}\), where \(d\) may be large.
@@ -39,8 +39,39 @@ Sampling from a \(d\)-dimensional Gaussian distribution \(\mathcal{N}\pr{\Bs{\mu
 Covariance matrix \(\B{\Sigma}\) positive definite. Precision matrix \(\B{Q}=\B{\Sigma}^{-1}\) exists and also positive definite.
 \end{frame}
 
+\subsection{Motivation}
 \begin{frame}
-\frametitle{Vanilla Cholesky Sampler}
+\frametitle{Special Cases}
+\begin{itemize}
+\item \(d = 1\)
+\begin{algorithm}[H]
+\caption{Box--Muller sampler}
+\begin{algorithmic}[1]
+\State Draw $u_1$, $u_2$ $\overset{\mathrm{i.i.d.}}{\sim} \mathcal{U}((0,1])$.
+\State Set $\tilde{u}_1 = \sqrt{-2\log(u_1)}$.
+\State Set $\tilde{u}_2 = 2\pi u_2$.\\ 
+\Return $(\theta_1,\theta_2) = \pr{\mu + \frac{\tilde{u}_1}{\sqrt{q}} \sin(\tilde{u}_2),\mu + \frac{\tilde{u}_1}{\sqrt{q}} \cos(\tilde{u}_2)}$.
+\end{algorithmic}
+\end{algorithm}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Special Cases}
+\begin{algorithm}[H]
+\caption{Sampler when $\B{Q}$ is a diagonal matrix}
+\label{algo:multi_diag}
+\begin{algorithmic}[1]
+\For{$i \in [d]$} \Comment{\textcolor{blue}{In some programming languages, this loop can be vectorized.}} 
+\State Draw $\displaystyle{\theta_i \sim \mathcal{N}\pr{\mu_i,1/q_i}}$.
+\EndFor\\
+\Return $\Bs{\theta} = (\theta_1,\cdots,\theta_d)^{\top}$.
+\end{algorithmic}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+\frametitle{General Cases}
 \begin{algorithm}[H]
 \caption{Cholesky sampler}
 \begin{algorithmic}[1]
@@ -51,22 +82,28 @@ Covariance matrix \(\B{\Sigma}\) positive definite. Precision matrix \(\B{Q}=\B{
 \Return $\Bs{\theta} = \Bs{\mu} + \B{w}$.
 \end{algorithmic}
 \end{algorithm}
-Problem: computational cost $\Theta(d^3)$ and storage requirement $\Theta(d^2)$.
+Problem: 
+\begin{itemize}
+\item Storage requirement \(\Theta(d^2)\).
+\item Computational cost \(\mathcal{O}(d^3 + d^2T)\) (\(T\) is the number of samples), only when \(\B{Q}\) is unchanged.
+\end{itemize}
 \end{frame}
 
+\subsection{Methods}
 \begin{frame}
-\frametitle{Better Solutions}
+\frametitle{More Efficient Solutions}
 \begin{itemize}
     \item Square Root approximation: Approximate \(\B{Q}^{1/2}\).
     \item Conjugate Gradient: Solve a linear system w.r.t.\ \(\B{Q}\).
-    \item Matrix Splitting: A generation of Gibbs Sampler.
+    \item Matrix Splitting: A generalization of Gibbs Sampler.
     \item Data Augmentation: Introduce auxiliary variable.
 \end{itemize}
-Improvement: computational cost $\mathcal{O}(d^2)$ and storage requirement $\Theta(d)$.
+Improvement: computational cost $\mathcal{O}(d^2T)$ and storage requirement $\Theta(d)$.
 \end{frame}
 
+\subsection{Guidelines}
 \begin{frame}
-\frametitle{Guidelines to Choosing the Sampler}
+\frametitle{How to Choose the Sampler}
 
 \begin{tikzpicture}[node distance=0.5cm, align=center]
 
@@ -110,6 +147,32 @@ Improvement: computational cost $\mathcal{O}(d^2)$ and storage requirement $\The
 
 
 \end{tikzpicture}
+\end{frame}
+
+\section{Sampling Algorithms Derived From Numerical Algebra}
+\subsection{Polynomial Approximation}
+\begin{frame}
+\frametitle{1}
+\end{frame}
+\subsection{Conjugate Gradient-Based Samplers}
+\begin{frame}
+\frametitle{1}
+\end{frame}
+
+\section{Sampling Algorithms Based On MCMC}
+\subsection{Matrix Splitting}
+\begin{frame}
+\frametitle{1}
+\end{frame}
+\subsection{Data Augmentation}
+\begin{frame}
+\frametitle{1}
+\end{frame}
+
+\section{Unifying Approach Based On Stochastic PPA}
+\subsection{PPA}
+\begin{frame}
+\frametitle{1}
 \end{frame}
 
 \end{document}
