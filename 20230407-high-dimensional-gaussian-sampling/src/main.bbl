@@ -1,0 +1,560 @@
+\begin{thebibliography}{100}
+
+\bibitem{Adler1981}
+{\sc S.~L. Adler}, {\em Over-relaxation method for the {M}onte {C}arlo
+  evaluation of the partition function for multiquadratic actions}, Phys. Rev.
+  D, 23 (1981), pp.~2901--2904.
+
+\bibitem{Afonso2010}
+{\sc M.~V. Afonso, J.~M. Bioucas-Dias, and M.~A.~T. Figueiredo}, {\em Fast
+  image recovery using variable splitting and constrained optimization}, IEEE
+  Trans. Image Process., 19 (2010), pp.~2345--2356.
+
+\bibitem{Afonso2011}
+{\sc M.~V. Afonso, J.~M. Bioucas-Dias, and M.~A.~T. Figueiredo}, {\em An
+  augmented {Lagrangian} approach to the constrained optimization formulation
+  of imaging inverse problems}, IEEE Trans. Image Process., 20 (2011),
+  pp.~681--695.
+
+\bibitem{Allen2000}
+{\sc E.~Allen, J.~Baglama, and S.~Boyd}, {\em Numerical approximation of the
+  product of the square root of a matrix with a vector}, Linear Algebra Appl.,
+  310 (2000), pp.~167--181,
+  \url{https://doi.org/10.1016/S0024-3795(00)00068-9}.
+
+\bibitem{Altmann_IEEE_SSP_2014}
+{\sc Y.~Altmann, S.~McLaughlin, and N.~Dobigeon}, {\em Sampling from a
+  multivariate gaussian distribution truncated on a simplex: a review}, in
+  Proc. IEEE-SP Workshop Stat. and Signal Process. (SSP), Gold Coast,
+  Australia, July 2014, pp.~113--116,
+  \url{https://doi.org/10.1109/SSP.2014.6884588}.
+\newblock Invited paper.
+
+\bibitem{Armstrong2002}
+{\sc S.~A. Armstrong, J.~E. Staunton, L.~B. Silverman, R.~Pieters, M.~L. den
+  Boer, M.~D. Minden, S.~E. Sallan, E.~S. Lander, T.~R. Golub, and S.~J.
+  Korsmeyer}, {\em {MLL} translocations specify a distinct gene expression
+  profile that distinguishes a unique leukemia}, Nat. Genet., 30 (2002),
+  pp.~41--47, \url{https://doi.org/10.1038/ng765}.
+
+\bibitem{Aune2013}
+{\sc E.~Aune, J.~Eidsvik, and Y.~Pokern}, {\em Iterative numerical methods for
+  sampling from high dimensional {G}aussian distributions}, Stat. Comput., 23
+  (2013), pp.~501--521, \url{https://doi.org/10.1007/s11222-012-9326-8}.
+
+\bibitem{axelsson_1994}
+{\sc O.~Axelsson}, {\em Iterative Solution Methods}, Cambridge University
+  Press, 1994, \url{https://doi.org/10.1017/CBO9780511624100}.
+
+\bibitem{Barbos2017}
+{\sc A.-C. Barbos, F.~Caron, J.-F. Giovannelli, and A.~Doucet}, {\em Clone
+  {MCMC}: {P}arallel high-dimensional {G}aussian {G}ibbs sampling}, in Adv. in
+  Neural Information Process. Systems, 2017, pp.~5020--5028.
+
+\bibitem{Barone1990}
+{\sc P.~Barone and A.~Frigessi}, {\em Improving stochastic relaxation for
+  {G}aussian random fields}, Probab. Eng. Inform. Sc., 4 (1990), p.~369–389.
+
+\bibitem{Bauschke2017}
+{\sc H.~H. Bauschke and P.~L. Combettes}, {\em Convex Analysis and Monotone
+  Operator Theory in Hilbert Spaces}, Springer International Publishing,
+  2nd~ed., 2017.
+
+\bibitem{Besag1995}
+{\sc J.~Besag and C.~Kooperberg}, {\em On conditional and intrinsic
+  autoregressions}, Biometrika, 82 (1995), pp.~733--746,
+  \url{https://doi.org/10.2307/2337341}.
+
+\bibitem{Bishop2006}
+{\sc C.~M. Bishop}, {\em Pattern {R}ecognition and {M}achine {L}earning},
+  Springer-Verlag, 2006.
+
+\bibitem{Box1994}
+{\sc G.~E.~P. Box and G.~M. Jenkins}, {\em {Time Series Analysis: Forecasting
+  and Control}}, Prentice Hall PTR, 3rd~ed., 1994.
+
+\bibitem{Boyd2011}
+{\sc S.~Boyd, N.~Parikh, E.~Chu, B.~Peleato, and J.~Eckstein}, {\em Distributed
+  optimization and statistical learning via the alternating direction method of
+  multipliers}, Found. Trends Mach. Learn., 3 (2011), pp.~1--122.
+
+\bibitem{Brahim2004}
+{\sc S.~Brahim-Belhouari and A.~Bermak}, {\em Gaussian process for
+  nonstationary time series prediction}, Comput. Statist. Data Anal., 47
+  (2004), pp.~705 -- 712, \url{https://doi.org/10.1016/j.csda.2004.02.006}.
+
+\bibitem{Bredies2017}
+{\sc K.~Bredies and H.~Sun}, {\em A proximal point analysis of the
+  preconditioned alternating direction method of multipliers}, J. Optim. Theory
+  Appl., 173 (2017), pp.~878--907,
+  \url{https://doi.org/10.1007/s10957-017-1112-5}.
+
+\bibitem{Stan2017}
+{\sc B.~Carpenter, A.~Gelman, M.~Hoffman, D.~Lee, B.~Goodrich, M.~Betancourt,
+  M.~Brubaker, J.~Guo, P.~Li, and A.~Riddell}, {\em {Stan: A Probabilistic
+  Programming Language}}, J. Stat. Softw., 76 (2017), pp.~1--32,
+  \url{https://doi.org/10.18637/jss.v076.i01}.
+
+\bibitem{Chambolle2011}
+{\sc A.~Chambolle and T.~Pock}, {\em A {F}irst-{O}rder {P}rimal-{D}ual
+  {A}lgorithm for {C}onvex {P}roblems with {A}pplications to {I}maging}, J.
+  Math. Imaging Vision, 40 (2011), pp.~120--145,
+  \url{https://doi.org/10.1007/s10851-010-0251-1}.
+
+\bibitem{Cholesky1910}
+{\sc A.-L. Cholesky}, {\em Sur la r\'esolution num\'erique des syst\`emes
+  d'\'equations lin\'eaires}, Bulletin de la soci\'et\'e des amis de la
+  biblioth\`eque de l'\'Ecole polytechnique, 39 (1910), pp.~81--95.
+
+\bibitem{Chow2014}
+{\sc E.~Chow and Y.~Saad}, {\em Preconditioned {K}rylov {S}ubspace {M}ethods
+  for {S}ampling {M}ultivariate {G}aussian {D}istributions}, SIAM J. Sci.
+  Comput., 36 (2014), pp.~A588--A608, \url{https://doi.org/10.1137/130920587}.
+
+\bibitem{tridiag2}
+{\sc E.~S. Coakley and V.~Rokhlin}, {\em A fast divide-and-conquer algorithm
+  for computing the spectra of real symmetric tridiagonal matrices}, Appl.
+  Comput. Harmonic Anal., 34 (2013), pp.~379--414,
+  \url{https://doi.org/https://doi.org/10.1016/j.acha.2012.06.003}.
+
+\bibitem{Cressie1993}
+{\sc N.~A.~C. Cressie}, {\em Statistics for Spatial Data}, Wiley, New York,
+  2~ed., 1993.
+
+\bibitem{Davis1987b}
+{\sc M.~W. Davis}, {\em Generating large stochastic simulations---{T}he matrix
+  polynomial approximation method}, Math. Geosci., 19 (1987), pp.~99--107,
+  \url{https://doi.org/10.1007/BF00898190}.
+
+\bibitem{Dietrich1997}
+{\sc C.~R. Dietrich and G.~N. Newsam}, {\em Fast and {E}xact {S}imulation of
+  {S}tationary {Gaussian} {P}rocesses through {C}irculant {E}mbedding of the
+  {C}ovariance {Matrix}}, SIAM J. Sci. Comput., 18 (1997), pp.~1088--1107,
+  \url{https://doi.org/10.1137/S1064827592240555}.
+
+\bibitem{Duane1987}
+{\sc S.~Duane, A.~Kennedy, B.~J. Pendleton, and D.~Roweth}, {\em {Hybrid Monte
+  Carlo}}, Phys. Lett. B, 195 (1987), pp.~216 -- 222.
+
+\bibitem{Esser2010}
+{\sc E.~Esser, X.~Zhang, and T.~Chan}, {\em A {G}eneral {F}ramework for a
+  {C}lass of {F}irst {O}rder {P}rimal-{D}ual {A}lgorithms for {C}onvex
+  {O}ptimization in {I}maging {S}cience}, SIAM J. Imaging Sci., 3 (2010),
+  pp.~1015--1046, \url{https://doi.org/10.1137/09076934X}.
+
+\bibitem{Fahrmeir2001}
+{\sc L.~Fahrmeir and S.~Lang}, {\em Bayesian {S}emiparametric {R}egression
+  {A}nalysis of {M}ulticategorical {T}ime-{S}pace {D}ata}, Ann. Inst. Statist.
+  Math., 53 (2001), pp.~11--30, \url{https://doi.org/10.1023/A:1017904118167}.
+
+\bibitem{Feron2016}
+{\sc O.~F\'eron, F.~Orieux, and J.~F. Giovannelli}, {\em Gradient {S}can
+  {Gibbs} {S}ampler: {A}n {E}fficient {A}lgorithm for {H}igh-{D}imensional
+  {Gaussian} {D}istributions}, IEEE J. Sel. Topics Signal Process., 10 (2016),
+  pp.~343--352, \url{https://doi.org/10.1109/JSTSP.2015.2510961}.
+
+\bibitem{FoxParker14}
+{\sc C.~Fox and A.~Parker}, {\em {Convergence in Variance of Chebyshev
+  Accelerated Gibbs Samplers}}, SIAM J. Sci. Comput., 36 (2014),
+  pp.~A124--A147, \url{https://doi.org/10.1137/120900940}.
+
+\bibitem{Fox2017}
+{\sc C.~Fox and A.~Parker}, {\em Accelerated {G}ibbs sampling of normal
+  distributions using matrix splittings and polynomials}, Bernoulli, 23 (2017),
+  pp.~3711--3743, \url{https://doi.org/10.3150/16-BEJ863}.
+
+\bibitem{Gabay1976}
+{\sc D.~Gabay and B.~Mercier}, {\em A dual algorithm for the solution of
+  nonlinear variational problems via finite element approximation}, Comput.
+  Math. Appl., 2 (1976), pp.~17--40,
+  \url{https://doi.org/10.1016/0898-1221(76)90003-1}.
+
+\bibitem{Galerne2011}
+{\sc B.~{Galerne}, Y.~{Gousseau}, and J.~{Morel}}, {\em Random phase textures:
+  Theory and synthesis}, IEEE Trans. Image Process., 20 (2011), pp.~257--267,
+  \url{https://doi.org/10.1109/TIP.2010.2052822}.
+
+\bibitem{Gelman95}
+{\sc A.~Gelman, C.~Robert, N.~Chopin, and J.~Rousseau}, {\em Bayesian Data
+  Analysis}, 1995.
+
+\bibitem{Geman1984}
+{\sc S.~Geman and D.~Geman}, {\em Stochastic relaxation, {G}ibbs distributions,
+  and the {B}ayesian restoration of images}, IEEE Trans. Patt. Anal. Mach.
+  Intell., 6 (1984), pp.~721--741.
+
+\bibitem{Gilavert2015}
+{\sc C.~Gilavert, S.~Moussaoui, and J.~Idier}, {\em Efficient {Gaussian}
+  {S}ampling for {S}olving {Large}-{Scale} {Inverse} {Problems} {Using}
+  {MCMC}}, IEEE Trans. Signal Process., 63 (2015), pp.~70--80,
+  \url{https://doi.org/10.1109/TSP.2014.2367457}.
+
+\bibitem{Giovannelli2015}
+{\sc J.-F. Giovannelli and J.~Idier}, {\em {Regularization and Bayesian Methods
+  for Inverse Problems in Signal and Image Processing}}, Wiley-IEEE Press,
+  1st~ed., 2015.
+
+\bibitem{Giudici1999}
+{\sc P.~Giudici and P.~J. Green}, {\em Decomposable {G}raphical {G}aussian
+  {M}odel {D}etermination}, Biometrika, 86 (1999), pp.~785--801,
+  \url{https://doi.org/10.1093/biomet/86.4.785}.
+
+\bibitem{Glowinski1975}
+{\sc {Glowinski, R.} and {Marroco, A.}}, {\em Sur l'approximation, par
+  \'el\'ements finis d'ordre un, et la r\'esolution, par
+  p\'enalisation-dualit\'e d'une classe de probl\`emes de {D}irichlet non
+  lin\'eaires}, RAIRO. Anal. Numérique, 9 (1975), pp.~41--76,
+  \url{http://www.numdam.org/item/M2AN_1975__9_2_41_0}.
+
+\bibitem{Golub1989}
+{\sc G.~H. Golub and C.~F. Van~Loan}, {\em Matrix Computations}, The Johns
+  Hopkins University Press, 2nd~ed., 1989.
+
+\bibitem{Goodman1989}
+{\sc J.~Goodman and A.~D. Sokal}, {\em Multigrid {M}onte {C}arlo method.
+  {C}onceptual foundations}, Phys. Rev. D, 40 (1989), pp.~2035--2071,
+  \url{https://doi.org/10.1103/PhysRevD.40.2035}.
+
+\bibitem{Green1995}
+{\sc P.~J. Green}, {\em {Reversible jump Markov chain Monte Carlo computation
+  and Bayesian model determination}}, Biometrika, 82 (1995), pp.~711--732,
+  \url{https://doi.org/10.1093/biomet/82.4.711}.
+
+\bibitem{tridiag1}
+{\sc M.~Gu and S.~C. Eisenstat}, {\em A divide-and-conquer algorithm for the
+  symmetric tridiagonal eigenproblem}, SIAM J. Matrix Anal. Appl., 16 (1995),
+  pp.~172--191, \url{https://doi.org/10.1137/S0895479892241287}.
+
+\bibitem{Hale2008b}
+{\sc N.~Hale, N.~Higham, and L.~Trefethen}, {\em Computing $a^\alpha, \log(a)$,
+  and {R}elated {M}atrix {Functions} by {C}ontour {I}ntegrals}, SIAM Journal on
+  Numerical Analysis, 46 (2008), pp.~2505--2523,
+  \url{https://doi.org/10.1137/070700607}.
+
+\bibitem{Havil2003}
+{\sc J.~Havil}, {\em Gamma: Exploring Euler's Constant}, Princeton University
+  Press, 2003.
+
+\bibitem{HestenesStiefel1952}
+{\sc M.~R. Hestenes and E.~Stiefel}, {\em Methods of {C}onjugate {G}radients
+  for {S}olving {L}inear {S}ystems}, J. Res. Natl. Inst. Stand., 49 (1952),
+  pp.~409--436.
+
+\bibitem{Higdon2007}
+{\sc D.~Higdon}, {\em {A Primer on Space-Time Modeling from a Bayesian
+  Perspective}}, Chapman \& Hall/CRC, 2007, pp.~217--279.
+
+\bibitem{HobertJones2001}
+{\sc J.~P. Hobert and G.~L. Jones}, {\em {Honest Exploration of Intractable
+  Probability Distributions via Markov Chain Monte Carlo}}, Stat. Sci., 16
+  (2001), pp.~312 -- 334, \url{https://doi.org/10.1214/ss/1015346317}.
+
+\bibitem{Idier2008}
+{\sc J.~Idier}, ed., {\em Bayesian Approach to Inverse Problems}, Wiley, 2008,
+  \url{https://doi.org/10.1002/9780470611197}.
+
+\bibitem{Ilic2004}
+{\sc M.~Ilic, T.~Pettitt, and I.~Turner}, {\em Bayesian {C}omputations and
+  {E}fficient {A}lgorithms for {Computing} {F}unctions of {Large} {S}parse
+  {M}atrices}, ANZIAM J., 45 (2004), pp.~504--518,
+  \url{https://eprints.qut.edu.au/22511/}.
+
+\bibitem{Ilic2009}
+{\sc M.~Ilic, I.~W. Turner, and D.~P. Simpson}, {\em A restarted {L}anczos
+  approximation to functions of a symmetric matrix}, IMA J. Numer. Anal., 30
+  (2009), pp.~1044--1061, \url{https://doi.org/10.1093/imanum/drp003}.
+
+\bibitem{CoEPrA}
+{\sc O.~Ivanciuc}, {\em Comparative evaluation of prediction algorithms}, 2006,
+  \url{http://www.coepra.org/CoEPrA_regr.html}.
+
+\bibitem{Jeffreys1946}
+{\sc H.~Jeffreys}, {\em An invariant form for the prior probability in
+  estimation problems}, Proc. R. Soc. A, 186 (1946), pp.~453--461.
+
+\bibitem{Johnson2013}
+{\sc M.~Johnson, J.~Saunderson, and A.~Willsky}, {\em Analyzing {H}ogwild
+  parallel {G}aussian {G}ibbs sampling}, in Adv. in Neural Information Process.
+  Systems, 2013, pp.~2715--2723.
+
+\bibitem{Kass1998}
+{\sc R.~E. Kass, B.~P. Carlin, A.~Gelman, and R.~M. Neal}, {\em Markov chain
+  monte carlo in practice: A roundtable discussion}, Amer. Statist., 52 (1998),
+  pp.~93--100.
+
+\bibitem{Kittler1984}
+{\sc J.~Kittler and J.~F\"oglein}, {\em Contextual classification of
+  multispectral pixel data}, Image Vis. Comput., 2 (1984), pp.~13--29,
+  \url{https://doi.org/10.1016/0262-8856(84)90040-4}.
+
+\bibitem{LeCun1998}
+{\sc Y.~{Le Cun}, L.~{Bottou}, Y.~{Bengio}, and P.~{Haffner}}, {\em
+  Gradient-based learning applied to document recognition}, Proc. IEEE, 86
+  (1998), pp.~2278--2324, \url{https://doi.org/10.1109/5.726791}.
+
+\bibitem{Li2016}
+{\sc M.~Li, D.~Sun, and K.~Toh}, {\em A {M}ajorized {ADMM} with {I}ndefinite
+  {P}roximal {T}erms for {L}inearly {C}onstrained {C}onvex {C}omposite
+  {O}ptimization}, SIAM J. Optim., 26 (2016), pp.~922--950,
+  \url{https://doi.org/10.1137/140999025}.
+
+\bibitem{Li2009}
+{\sc S.~Z. Li}, {\em {Markov Random Field Modeling in Image Analysis}},
+  Springer, 3rd~ed., 2009.
+
+\bibitem{Li2015}
+{\sc Y.~Li and S.~K. Ghosh}, {\em {Efficient Sampling Methods for Truncated
+  Multivariate Normal and Student-t Distributions Subject to Linear Inequality
+  Constraints}}, J. Stat. Theory Pract., 9 (2015), pp.~712--732,
+  \url{https://doi.org/10.1080/15598608.2014.996690}.
+
+\bibitem{Likas2004}
+{\sc A.~C. Likas and N.~P. Galatsanos}, {\em A variational approach for
+  {Bayesian} blind image deconvolution}, IEEE Trans. Signal Process., 52
+  (2004), pp.~2222--2233.
+
+\bibitem{Liu2001}
+{\sc J.~S. Liu}, {\em Monte Carlo Strategies in Scientific Computing},
+  Springer, 2001.
+
+\bibitem{MacKay2003}
+{\sc D.~J.~C. MacKay}, {\em Information Theory, Inference \& Learning
+  Algorithms}, Cambridge University Press, Cambridge, UK, 2003.
+
+\bibitem{Mallat_book}
+{\sc S.~Mallat}, {\em A Wavelet Tour of Signal Processing, Third Edition: The
+  Sparse Way}, Academic Press, Inc., USA, 3rd~ed., 2008.
+
+\bibitem{Mantoglou1982}
+{\sc A.~Mantoglou and J.~L. Wilson}, {\em The {T}urning {B}ands {M}ethod for
+  simulation of random fields using line generation by a spectral method},
+  Water Resour. Res., 18 (1982), pp.~1379--1394,
+  \url{https://doi.org/10.1029/WR018i005p01379}.
+
+\bibitem{Marnissi2019}
+{\sc Y.~Marnissi, D.~Abboud, E.~Chouzenoux, J.-C. Pesquet, M.~El-Badaoui, and
+  A.~Benazza-Benyahia}, {\em {A Data Augmentation Approach for Sampling
+  {G}aussian Models in High Dimension}}, in Proc. European Signal Process.
+  Conf. (EUSIPCO), Coruna, Spain, 2019.
+
+\bibitem{Marnissi2018}
+{\sc Y.~Marnissi, E.~Chouzenoux, A.~Benazza-Benyahia, and J.-C. Pesquet}, {\em
+  {An Auxiliary Variable Method for {Markov} Chain {Monte Carlo} Algorithms in
+  High Dimension}}, Entropy, 20 (2018),
+  \url{https://doi.org/10.3390/e20020110}.
+
+\bibitem{Martinet1970}
+{\sc B.~Martinet}, {\em {Br\`eve communication. R\'egularisation
+  d'in\'equations variationnelles par approximations successives}}, ESAIM Math.
+  Model. Numer. Anal., 4 (1970), pp.~154--158,
+  \url{http://www.numdam.org/item/M2AN_1970__4_3_154_0}.
+
+\bibitem{Martinet1972}
+{\sc B.~Martinet}, {\em {Determination approach\'e d'un point fixe d’une
+  application pseudocontractante. Cas de l'application prox}}, CR Math. Acad.
+  Sci. Paris, 274 (1972), pp.~163--165.
+
+\bibitem{Mason2002}
+{\sc J.~Mason and D.~Handscomb}, {\em Chebyshev Polynomials}, CRC Press, 2002.
+
+\bibitem{Mejia1974}
+{\sc J.~M. Mej\'ia and I.~Rodr\'iguez-Iturbe}, {\em On the synthesis of random
+  field sampling from the spectrum: An application to the generation of
+  hydrologic spatial processes}, Water Resour. Res., 10 (1974), pp.~705--711,
+  \url{https://doi.org/10.1029/WR010i004p00705}.
+
+\bibitem{Minty1962}
+{\sc G.~J. Minty}, {\em Monotone (nonlinear) operators in {H}ilbert space},
+  Duke Math. J., 29 (1962), pp.~341--346,
+  \url{https://doi.org/10.1215/S0012-7094-62-02933-2}.
+
+\bibitem{Moivre1718}
+{\sc A.~d. Moivre}, {\em {The Doctrine of Chances: Or, a Method of Calculating
+  the Probability of Events in Play}}, W. Pearson, 1st~ed., 1718.
+
+\bibitem{Molina2006}
+{\sc R.~Molina, J.~Mateos, and A.~K. Katsaggelos}, {\em Blind deconvolution
+  using a variational approach to parameter, image, and blur estimation}, IEEE
+  Trans. Image Process., 15 (2006), pp.~3715--3727.
+
+\bibitem{Molina1989}
+{\sc R.~Molina and B.~D. Ripley}, {\em Using spatial models as priors in
+  astronomical image analysis}, J. Appl. Stat., 16 (1989), pp.~193--206.
+
+\bibitem{Moreau1965}
+{\sc J.~J. Moreau}, {\em Proximit\'e et dualit\'e dans un espace hilbertien},
+  Bull. de la Soc. Math. de France, 93 (1965), pp.~273--299,
+  \url{https://doi.org/10.24033/bsmf.1625}.
+
+\bibitem{Orieux2012}
+{\sc F.~{Orieux}, O.~{Feron}, and J.~. {Giovannelli}}, {\em Sampling
+  high-dimensional gaussian distributions for general linear inverse problems},
+  IEEE Signal Process. Lett., 19 (2012), pp.~251--254,
+  \url{https://doi.org/10.1109/LSP.2012.2189104}.
+
+\bibitem{Orieux2010}
+{\sc F.~Orieux, J.-F. Giovannelli, and T.~Rodet}, {\em {Bayesian estimation of
+  regularization and point spread function parameters for Wiener--Hunt
+  deconvolution}}, J. Opt. Soc. Am. A, 27 (2010), pp.~1593--1607,
+  \url{https://doi.org/10.1364/JOSAA.27.001593}.
+
+\bibitem{Papandreou2011}
+{\sc G.~Papandreou and A.~L. Yuille}, {\em Gaussian sampling by local
+  perturbations}, in Adv. in Neural Information Process. Systems, 2010,
+  pp.~1858--1866.
+
+\bibitem{Park2008}
+{\sc T.~Park and G.~Casella}, {\em The {Bayesian} {L}asso}, J. Amer. Stat.
+  Assoc., 103 (2008), pp.~681--686,
+  \url{https://doi.org/10.1198/016214508000000337}.
+
+\bibitem{Parker2012}
+{\sc A.~Parker and C.~Fox}, {\em {Sampling {G}aussian Distributions in {K}rylov
+  Spaces with Conjugate Gradients}}, SIAM J. Sci. Comput., 34 (2012),
+  pp.~B312--B334, \url{https://doi.org/10.1137/110831404}.
+
+\bibitem{Pereira2019}
+{\sc M.~Pereira and N.~Desassis}, {\em {Efficient simulation of Gaussian Markov
+  random fields by Chebyshev polynomial approximation}}, Spat. Stat., 31
+  (2019), p.~100359, \url{https://doi.org/10.1016/j.spasta.2019.100359}.
+
+\bibitem{Polson2013}
+{\sc N.~G. Polson, J.~G. Scott, and J.~Windle}, {\em {Bayesian Inference for
+  Logistic Models Using {Polya-Gamma} Latent Variables}}, J. Amer. Stat.
+  Assoc., 108 (2013), pp.~1339--1349,
+  \url{https://doi.org/10.1080/01621459.2013.829001}.
+
+\bibitem{Press2007}
+{\sc W.~H. Press, S.~A. Teukolsky, W.~T. Vetterling, and B.~P. Flannery}, {\em
+  Numerical Recipes: The Art of Scientific Computing}, Cambridge University
+  Press, New York, NY, USA, 3rd~ed., 2007.
+
+\bibitem{Rasmussen2003}
+{\sc C.~E. Rasmussen}, {\em {Gaussian Processes to Speed up Hybrid Monte Carlo
+  for Expensive Bayesian Integrals}}, in Bayesian Statistics 7, Oxford
+  University Press, 2003, pp.~651--660.
+
+\bibitem{Robert94}
+{\sc C.~P. Robert}, {\em {The {Bayesian} Choice: a decision-theoretic
+  motivation}}, Springer, 2001.
+
+\bibitem{Robert2004}
+{\sc C.~P. Robert and G.~Casella}, {\em Monte Carlo Statistical Methods},
+  Springer, 2004.
+
+\bibitem{RobertsSahu1997}
+{\sc G.~O. Roberts and S.~K. Sahu}, {\em {Updating Schemes, Correlation
+  Structure, Blocking and Parameterization for the {G}ibbs Sampler}}, J. Roy.
+  Stat. Soc. Ser. B, 59 (1997), pp.~291--317,
+  \url{https://doi.org/10.1111/1467-9868.00070}.
+
+\bibitem{Roberts1996}
+{\sc G.~O. Roberts and R.~L. Tweedie}, {\em Exponential convergence of
+  {L}angevin distributions and their discrete approximations}, Bernoulli, 2
+  (1996), pp.~341--363, \url{https://doi.org/10.2307/3318418}.
+
+\bibitem{Rockafellar1976}
+{\sc R.~T. Rockafellar}, {\em {Monotone Operators and the Proximal Point
+  Algorithm}}, SIAM J. Control Optim., 14 (1976), pp.~877--898,
+  \url{https://doi.org/10.1137/0314056}.
+
+\bibitem{Rue2001}
+{\sc H.~Rue}, {\em {Fast Sampling of {G}aussian {M}arkov Random Fields}}, J.
+  Roy. Stat. Soc. Ser. B, 63 (2001), pp.~325--338,
+  \url{https://doi.org/10.1111/1467-9868.00288}.
+
+\bibitem{Rue2005}
+{\sc H.~Rue and L.~Held}, {\em {Gaussian {M}arkov Random Fields: Theory And
+  Applications}}, Chapman \& Hall/CRC, 2005.
+
+\bibitem{Saad2003}
+{\sc Y.~Saad}, {\em Iterative Methods for Sparse Linear Systems}, Society for
+  Industrial and Applied Mathematics, Philadelphia, PA, USA, 2nd~ed., 2003.
+
+\bibitem{Scheur1962}
+{\sc E.~M. Scheuer and D.~S. Stoller}, {\em {On the Generation of Normal Random
+  Vectors}}, Technometrics, 4 (1962), pp.~278--281,
+  \url{https://doi.org/10.2307/1266625}.
+
+\bibitem{Schneider2003}
+{\sc M.~K. Schneider and A.~S. Willsky}, {\em {A {K}rylov Subspace Method for
+  Covariance Approximation and Simulation of Random Processes and Fields}},
+  Multidimens. Syst. Signal Process., 14 (2003), pp.~295--318,
+  \url{https://doi.org/10.1023/A:1023530718764}.
+
+\bibitem{Shi2000}
+{\sc J.~Shi and J.~Malik}, {\em Normalized cuts and image segmentation}, IEEE
+  Trans. Patt. Anal. Mach. Intell., 22 (2000), pp.~888--905,
+  \url{https://doi.org/10.1109/34.868688}.
+
+\bibitem{Shinozuka1972}
+{\sc M.~Shinozuka and C.-M. Jan}, {\em {Digital simulation of random processes
+  and its applications}}, J. Sound Vib., 25 (1972), pp.~111--128,
+  \url{https://doi.org/10.1016/0022-460X(72)90600-1}.
+
+\bibitem{Simpson2008}
+{\sc D.~P. Simpson, I.~W. Turner, and A.~N. Pettitt}, {\em Fast sampling from a
+  {G}aussian {M}arkov random field using {K}rylov subspace approaches}, 2008,
+  \url{https://eprints.qut.edu.au/14376/}.
+
+\bibitem{Simpson2013}
+{\sc D.~P. Simpson, I.~W. Turner, C.~M. Strickland, and A.~N. Pettitt}, {\em
+  {Scalable iterative methods for sampling from massive Gaussian random
+  vectors}}, 2013, \url{https://arxiv.org/abs/1312.1476}.
+
+\bibitem{Stewart2001}
+{\sc G.~Stewart}, {\em Matrix Algorithms Volume 2: Eigensystems}, Society for
+  Industrial and Applied Mathematics, 2001.
+
+\bibitem{Thomas2007}
+{\sc D.~B. Thomas, W.~Luk, P.~H. Leong, and J.~D. Villasenor}, {\em {Gaussian
+  Random Number Generators}}, ACM Comput. Surv., 39 (2007),
+  \url{https://doi.org/10.1145/1287620.1287622}.
+
+\bibitem{Trench1964}
+{\sc W.~Trench}, {\em {An Algorithm for the Inversion of Finite Toeplitz
+  Matrices}}, SIAM J. Appl. Math., 12 (1964), pp.~512--522,
+  \url{https://doi.org/10.1137/0112045}.
+
+\bibitem{Vasco1999}
+{\sc D.~W. Vasco, L.~R. Johnson, and O.~Marques}, {\em {Global Earth structure:
+  inference and assessment}}, Geophys. J. Int., 137 (1999), pp.~381--407,
+  \url{https://doi.org/10.1046/j.1365-246X.1999.00823.x}.
+
+\bibitem{Vono2019}
+{\sc M.~Vono, N.~Dobigeon, and P.~Chainais}, {\em Split-and-augmented {Gibbs}
+  sampler - {Application} to large-scale inference problems}, IEEE Trans.
+  Signal Process., 67 (2019), pp.~1648--1661,
+  \url{https://doi.org/10.1109/TSP.2019.2894825}.
+
+\bibitem{Vono_2019sub}
+{\sc M.~Vono, N.~Dobigeon, and P.~Chainais}, {\em Asymptotically exact data
+  augmentation: models, properties and algorithms}, J. Comput. Graph. Stat.,
+  (2020).
+\newblock To appear.
+
+\bibitem{Welling2011}
+{\sc M.~Welling and Y.~W. Teh}, {\em Bayesian learning via stochastic gradient
+  {L}angevin dynamics}, in Proc. Int. Conf. Machine Learning (ICML), 2011,
+  pp.~681--688.
+
+\bibitem{Wilhelm2010}
+{\sc S.~Wilhelm and B.~Manjunath}, {\em {tmvtnorm: A Package for the Truncated
+  Multivariate Normal Distribution}}, R J., 2 (2010),
+  \url{https://doi.org/10.32614/RJ-2010-005}.
+
+\bibitem{Williams2006}
+{\sc C.~K.~I. Williams and C.~E. Rasmussen}, {\em Gaussian Processes for
+  Machine Learning}, MIT Press, 2006.
+
+\bibitem{Wood1994}
+{\sc A.~T.~A. Wood and G.~Chan}, {\em Simulation of {S}tationary {G}aussian
+  {Processes} in $[0, 1]^d$}, J. Comput. Graph. Stat., 3 (1994), pp.~409--432,
+  \url{https://doi.org/10.1080/10618600.1994.10474655}.
+
+\bibitem{Zhang2011}
+{\sc X.~Zhang, M.~Burger, and S.~Osher}, {\em {A Unified Primal-Dual Algorithm
+  Framework Based on Bregman Iteration}}, J. Sci. Comput., 46 (2011),
+  pp.~20--46, \url{https://doi.org/10.1007/s10915-010-9408-8}.
+
+\end{thebibliography}

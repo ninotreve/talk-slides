@@ -1,0 +1,245 @@
+% SIAM Shared Information Template
+% This is information that is shared between the main document and any
+% supplement. If no supplement is required, then this information can
+% be included directly in the main document.
+
+
+% Packages and macros go here
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lipsum}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{commath}
+\usepackage{caption}
+\usepackage{pifont}
+\usepackage{epstopdf}
+\usepackage{algorithm,algorithmicx,algpseudocode}
+\usepackage{stmaryrd}
+\usepackage{multirow}
+\usepackage{upgreek}
+\usepackage{url}
+\usepackage{bbold}
+\usepackage{afterpage}
+\usepackage[figuresright]{rotating}
+\usepackage{subfigure}
+\usepackage{ifthen}
+\usepackage{xspace}
+\usepackage{tikz}
+\usepackage{cite}  % not available on Overleaf apparently
+\usepackage{latexsym}
+
+\usetikzlibrary{matrix,decorations.pathmorphing,calc,decorations.pathreplacing,topaths,fit,positioning,automata,patterns,arrows,shapes,chains}
+\urldef\urlnew\url{https://mvono.github.io}
+\ifpdf
+  \DeclareGraphicsExtensions{.eps,.pdf,.png,.jpg}
+\else
+  \DeclareGraphicsExtensions{.eps}
+\fi
+
+\usetikzlibrary{arrows.meta}
+\tikzset{%
+  >={Latex[width=2mm,length=2mm]},
+  % Specifications for style of nodes:
+            base/.style = {rectangle, rounded corners, draw=black,
+                           minimum width=4cm, minimum height=1cm,
+                           text centered, font=\sffamily},
+  storage/.style = {base, fill=blue!30},
+       startstop/.style = {base, fill=red!30},
+    activityRuns/.style = {base, fill=green!30},
+         process/.style = {base, minimum width=2.5cm, fill=orange!15,
+                           font=\ttfamily},
+}
+
+% Add a serial/Oxford comma by default.
+\newcommand{\creflastconjunction}{, and~}
+
+% Commands
+\newcommand{\B}[1]{\mathbf{#1}} % shortcut for \mathbf
+\newcommand{\Bs}[1]{\boldsymbol{#1}} % shortcut for \boldsymbol
+\newcommand{\pr}[1]{\left(#1\right)} % shortcut for \left(\right)
+\newcommand{\br}[1]{\left[#1\right]} % shortcut for \left[\right]
+\newcommand{\bbr}[1]{\left\{#1\right\}} % shortcut for \left\{\right\}
+\newcommand{\nr}[1]{\left\|#1\right\|} % shortcut for \left\|\right\|
+\newcommand{\xmark}{\ding{55}}%
+\def\eqsp{\;}
+
+
+\newcommand{\pc}[1]{\textcolor{blue}{PC: #1}}
+
+\makeatletter
+\newcommand{\removelatexerror}{\let\@latex@error\@gobble}
+\makeatother
+
+\makeatletter
+\newcommand{\thickhline}{%
+    \noalign {\ifnum 0=`}\fi \hrule height 1pt
+    \futurelet \reserved@a \@xhline
+}
+
+\definecolor{green}{rgb}{0.0, 0.5, 0.0}
+\definecolor{Burgundy}{RGB}{144,0,32}
+
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{positioning}
+\tikzset{
+    state/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           minimum height=2em,
+           inner sep=2pt,
+           text centered,
+           },
+}
+
+% master block matrix, should use wrappers instead of calling this
+% directly
+% This should be called within the tikzpicture environment
+% \blockmatrix
+%  {width}
+%  {height}
+%  {text}
+%  {block_line_color} (can be none --> no line)
+%  {block_fill_color} (can be none --> empty fill)
+%  {is_diagonal} (true --> true, otherwise --> false)
+%  {diagonal_line_color} (ignored if not diagonal) (can be none --> no line)
+%  {diagonal_fill_color} (ignored if not diagonal) (can be noneo --> empty fill)
+%  {diagonal_offset} (half diagonal width in tikz units)
+% Note: colors here are not rgb, they are defined colors
+\newcommand{\blockmatrix}[9]{
+  \draw[draw=#4,fill=#5] (0,0) rectangle( #1,#2);
+  \ifthenelse{\equal{#6}{true}}
+  {
+    \draw[draw=#7,fill=#8] (0,#2) -- (#9,#2) -- ( #1,#9) -- ( #1,0) -- ( #1 - #9,0) -- (0,#2 -#9) -- cycle;
+  }
+  {}
+  \draw ( #1/2, #2/2) node { #3};
+}
+
+% Quick implementation of a tikz right parenthesis
+% \rightparen{width}
+\newcommand{\rightparen}[1]{
+  \begin{tikzpicture} 
+    \draw (0,#1/2) arc (0:30:#1);
+    \draw (0,#1/2) arc (0:-30:#1);
+  \end{tikzpicture}%this comment is necessary
+}
+
+% Quick implementation of a tikz left parenthesis
+% \leftparen{width}
+\newcommand{\leftparen}[1]{
+  \begin{tikzpicture} 
+    \draw (0,#1/2) arc (180:150:#1);
+    \draw (0,#1/2) arc (180:210:#1);
+  \end{tikzpicture}%this comment is necessary
+}
+
+% Unframed block matrix, "m" prefix to match fbox, mbox
+% \blockmatrix[r,g,b]{width}{height}{text}
+\newcommand{\mblockmatrix}[4][none]{
+  \begin{tikzpicture} 
+  \ifthenelse{\equal{#1}{none}}
+  {
+    \blockmatrix{#2}{#3}{#4}{none}{none}{false}{none}{none}{0.0}
+  }
+  {
+    \definecolor{fillcolor}{rgb}{#1}
+    \blockmatrix{#2}{#3}{#4}{none}{fillcolor}{false}{none}{none}{0.0}
+  }
+  \end{tikzpicture}%this comment is necessary
+}
+
+% Framed block matrix
+% \fblockmatrix[r,g,b]{width}{height}{text}
+\newcommand{\fblockmatrix}[4][none]{
+  \begin{tikzpicture} 
+  \ifthenelse{\equal{#1}{none}}
+  {
+    \blockmatrix{#2}{#3}{#4}{black}{none}{false}{none}{none}{0.0}
+  }
+  {
+    \definecolor{fillcolor}{rgb}{#1}
+    \blockmatrix{#2}{#3}{#4}{black}{fillcolor}{false}{none}{none}{0.0}
+  }
+  \end{tikzpicture}%this comment is necessary
+}
+
+% Diagonal block matrix
+% \dblockmatrix[r,g,b]{width}{height}{text}
+\newcommand{\dblockmatrix}[4][none]{
+  \begin{tikzpicture} 
+  \ifthenelse{\equal{#1}{none}}
+  {
+    \blockmatrix{#2}{#3}{#4}{black}{none}{true}{black}{none}{0.35cm}
+  }
+  {
+    \definecolor{fillcolor}{rgb}{#1}
+    \blockmatrix{#2}{#3}{#4}{black}{none}{true}{black}{fillcolor}{0.35cm}
+  }
+  \end{tikzpicture}%this comment is necessary
+}
+
+
+% Diagonal block matrix, but exposes diagonal offset
+% \diagonalblockmatrix[r,g,b]{width}{height}{text}
+\newcommand{\diagonalblockmatrix}[5][none]{
+  \begin{tikzpicture} 
+
+  \ifthenelse{\equal{#1}{none}}
+  {
+    \blockmatrix{#2}{#3}{#4}{black}{none}{true}{black}{none}{#5}
+  }
+  {
+    \definecolor{fillcolor}{rgb}{#1}
+    \blockmatrix{#2}{#3}{#4}{black}{none}{true}{black}{fillcolor}{#5}
+  }
+
+  \end{tikzpicture}%necessary comment
+}
+
+\newcommand{\valignbox}[1]{
+  \vtop{\null\hbox{#1}}% necessary comment
+}
+
+\newenvironment{blockmatrixtabular}
+{% necessary comment
+  \begin{tabular}{
+  @{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l
+  @{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l
+  @{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l@{}l
+  @{}
+  }
+}
+{
+  \end{tabular}%necessary comment
+}
+
+% Used for creating new theorem and remark environments
+\newsiamremark{remark}{Remark}
+\newsiamremark{hypothesis}{Hypothesis}
+\crefname{hypothesis}{Hypothesis}{Hypotheses}
+\newsiamthm{claim}{Claim}
+\newsiamremark{example}{Example}
+
+% Sets running headers as well as PDF title and authors
+\headers{High-dimensional Gaussian sampling: a review...}{M. Vono, N. Dobigeon, and P. Chainais}
+
+% Title. If the supplement option is on, then "Supplementary Material"
+% is automatically inserted before the title.
+\title{High-dimensional Gaussian sampling: a review \\and a unifying approach based on a stochastic proximal point algorithm}
+%\funding{This work was funded by the Fog Research Institute under contract no.~FRI-454.}}}
+
+% Authors: full names plus addresses.
+\author{Maxime Vono\thanks{Lagrange Mathematics and Computing Research Center, Huawei, 75007 Paris, France 
+  (\email{maxime.vono@gmail.com}, \urlnew).}
+  \and Nicolas Dobigeon\thanks{Univ. of Toulouse, IRIT/INP-ENSEEIHT, Toulouse, France and Institut Universitaire de France (IUF), France
+  (\email{nicolas.dobigeon@enseeiht.fr}).}
+\and Pierre Chainais\thanks{Univ. Lille, CNRS, Centrale Lille, UMR 9189 CRIStAL, F-59000 Lille, France 
+  (\email{pierre.chainais@centralelille.fr}).}}
+
+\usepackage{amsopn}
+\DeclareMathOperator{\diag}{diag}
+\usepackage{color}
