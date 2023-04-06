@@ -96,11 +96,11 @@ Problem:
     \item Square Root approximation: Approximate \(\B{Q}^{1/2}\).
     \item Conjugate Gradient: Solve a linear system w.r.t.\ \(\B{Q}\).
     \item Matrix Splitting: A generalization of Gibbs Sampler.
-    \item Data Augmentation: Introduce auxiliary variable.
+    \item Data Augmentation: Make use of structure \(\B{Q}= \B{Q}_1 + \B{Q}_2\), introduce auxiliary variable to facilitate sampling.
 \end{itemize}
 Improvement: 
 \begin{itemize}
-\item Computational cost \textcolor{red}{$\mathcal{O}(Kd^2T)$} (\(K\) is the number of iterations), or \textcolor{red}{$\mathcal{O}(d^2(T+T_{bi}))$} (\(T_{bi}\) is the number of burn-in samples).
+\item Computational cost \textcolor{red}{$\mathcal{O}(Kd^2T)$} (\(K\) is the number of iterations), or \textcolor{red}{$\mathcal{O}(d^2(T+T_\text{bi}))$} (\(T_\text{bi}\) is the number of burn-in samples).
 \item Storage requirement \textcolor{red}{\(\Theta(d)\)}.
 \end{itemize}
 \end{frame}
@@ -277,6 +277,85 @@ Sequentially builds a Gaussian vector with a covariance matrix being the best $k
 \end{algorithmic}
 \end{frame}
 
+\subsection{Summary}
+\begin{frame}
+\frametitle{Iterative Approaches or Factorization Approaches?}
+\begin{itemize}
+\item Memory needs of order $\Theta(d^2)$ prohibitive. 
+\item If storage not an issue, $K \ll (d+T-1)/T$?
+\item Gaussian sampling step embedded within a Gibbs sampler, with a varying covariance or precision matrix: $K \ll d$?
+\end{itemize}
+\end{frame}
+
+\subsection{Experiments}
+\begin{frame}
+\frametitle{Settings}
+\[
+    \B{\Sigma}_{ij} = 2 \exp\pr{-\dfrac{(s_i-s_j)^2}{2a^2}} + \epsilon\delta_{ij}, \quad \forall i,j \in [d]. 
+\]
+where $\{s_{i}\}_{i\in[d]}$ are evenly spaced scalars on $[-3,3]$, $\epsilon > 0$.
+
+$a = 1.5$ and $\epsilon = 10^{-6}$, small eigenvalues of $\B{\Sigma}$ clustered together near $10^{-6}$.
+
+\begin{figure}
+\centering
+\mbox{{\includegraphics[scale=0.45]{src/images/simu1_ex1_A.pdf}}}
+\mbox{{\includegraphics[scale=0.4]{src/images/simu1_ex1_eigvals.pdf}}}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Results for Accuracy}
+\begin{figure}
+    \centering
+    \mbox{{\includegraphics[scale=0.4]{src/images/simu1_ex1_A_Chol.pdf}}}
+    \mbox{{\includegraphics[scale=0.4]{src/images/simu1_ex1_A_CG.pdf}}}
+    \mbox{{\includegraphics[scale=0.4]{src/images/simu1_ex1_A_Cheby.pdf}}}
+  \caption{Scenario 1. Results of the three considered samplers for the sampling from $\mathcal{N}(\B{0}_d,\B{\Sigma})$ in dimension $d = 100$.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Results for CPU Time}
+\begin{figure}
+    \centering
+    \mbox{{\includegraphics[scale=0.33]{src/images/simu1_ex1_time_1.pdf}}}
+    \mbox{{\includegraphics[scale=0.33]{src/images/simu1_ex1_time_100.pdf}}}
+    \mbox{{\includegraphics[scale=0.33]{src/images/simu1_ex1_time_1000.pdf}}}
+    \mbox{{\includegraphics[scale=0.33]{src/images/simu1_ex1_time_10000.pdf}}}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Results When Large Eigenvalues Are Clustered}
+\begin{figure}
+    \centering
+    \mbox{{\includegraphics[scale=0.35]{src/images/simu1_ex1_invA.pdf}}}
+    \mbox{{\includegraphics[scale=0.3]{src/images/simu1_ex1_eigvals_invA.pdf}}}
+\end{figure}
+\begin{figure}
+    \centering
+    \mbox{{\includegraphics[scale=0.3]{src/images/simu1_ex1_invA_Chol.pdf}}}
+    \mbox{{\includegraphics[scale=0.3]{src/images/simu1_ex1_invA_CG.pdf}}}
+    \mbox{{\includegraphics[scale=0.3]{src/images/simu1_ex1_invA_Cheby.pdf}}}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{CG or Chebyshev?}
+\begin{figure}
+    \centering
+    \mbox{{\includegraphics[scale=0.4]{src/images/simu1_ex2_A.pdf}}}
+    \mbox{{\includegraphics[scale=0.3]{src/images/simu1_ex2_eigvals_A.pdf}}}
+\end{figure}
+\begin{figure}
+    \centering
+    \mbox{{\includegraphics[scale=0.3]{src/images/simu1_ex2_A_Chol.pdf}}}
+    \mbox{{\includegraphics[scale=0.3]{src/images/simu1_ex2_A_CG.pdf}}}
+    \mbox{{\includegraphics[scale=0.3]{src/images/simu1_ex2_A_Cheby.pdf}}}
+  \end{figure}
+\end{frame}
+
 \section{Sampling Algorithms Based On MCMC}
 \subsection{Matrix Splitting}
 \begin{frame}
@@ -429,7 +508,19 @@ $$
 \end{algorithm}
 \end{frame}
 
-\subsection{Data Augmentation}
+\subsection{Summary}
+\section{Data Augmentation}
+\begin{frame}
+\frametitle{Iterative Sampler or MCMC Sampler?}
+\begin{itemize}
+\item Iterative Sampler: $K$ iterations to generate one sample. 
+\item MCMC Sampler: burn-in period of length $T_{\text{bi}}$.
+\item $T + T_{\text{bi}} \ll KT$?
+\item MCMC methods when a large number $T\gtrsim T_{\text{bi}}$ of samples is desired. Iterative methods when a small number $T\lesssim T_{\text{bi}}/K$ of samples is desired.
+\end{itemize}
+\end{frame}
+
+\section{Data Augmentation}
 \begin{frame}
 \frametitle{1}
 \end{frame}
