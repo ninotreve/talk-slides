@@ -25,6 +25,7 @@
 	
 \begin{frame}
     \maketitle
+    SIAM Review 2022, code: \url{https://github.com/mvono/PyGauss}.
 \end{frame}
 
 \section{Introduction} 
@@ -312,7 +313,7 @@ $a = 1.5$ and $\epsilon = 10^{-6}$, small eigenvalues of $\B{\Sigma}$ clustered 
     \mbox{{\includegraphics[scale=0.4]{src/images/simu1_ex1_A_Chol.pdf}}}
     \mbox{{\includegraphics[scale=0.4]{src/images/simu1_ex1_A_CG.pdf}}}
     \mbox{{\includegraphics[scale=0.4]{src/images/simu1_ex1_A_Cheby.pdf}}}
-  \caption{Scenario 1. Results of the three considered samplers for the sampling from $\mathcal{N}(\B{0}_d,\B{\Sigma})$ in dimension $d = 100$.}
+  \caption{Results of the three considered samplers for the sampling from $\mathcal{N}(\B{0}_d,\B{\Sigma})$ in dimension $d = 100$.}
   \end{figure}
 \end{frame}
 
@@ -364,9 +365,9 @@ $a = 1.5$ and $\epsilon = 10^{-6}$, small eigenvalues of $\B{\Sigma}$ clustered 
 If $\Bs{\theta} \sim \mathcal{N}(\Bs{\mu},\B{Q}^{-1})$, then
 \[
 \begin{aligned}
-\text{E}(\Bs{\theta}_i | \Bs{\theta}_{-i}) &= \Bs{\mu} - \frac{1}{\B{Q}_{ii} }\sum_{j\ne i} \B{Q}_{ij} (\Bs{\theta}_j - \Bs{\mu}_j), \\
-\text{Prec}(\Bs{\theta}_i | \Bs{\theta}_{-i}) &= \B{Q}_{ii}, \\
-\text{Corr}(\Bs{\theta}_i, \Bs{\theta}_j | \Bs{\theta}_{-ij}) &= -\frac{\B{Q}_{ij}}{\sqrt{\B{Q}_{ii}\B{Q}_{jj}}}.
+\text{E}(\Bs{\theta}_i \mid\Bs{\theta}_{-i}) &= \Bs{\mu} - \frac{1}{\B{Q}_{ii} }\sum_{j\ne i} \B{Q}_{ij} (\Bs{\theta}_j - \Bs{\mu}_j), \\
+\text{Prec}(\Bs{\theta}_i \mid\Bs{\theta}_{-i}) &= \B{Q}_{ii}, \\
+\text{Corr}(\Bs{\theta}_i, \Bs{\theta}_j \mid\Bs{\theta}_{-ij}) &= -\frac{\B{Q}_{ij}}{\sqrt{\B{Q}_{ii}\B{Q}_{jj}}}.
 \end{aligned}
 \]
 Compare the above results with
@@ -517,7 +518,7 @@ $$
 {\renewcommand{\arraystretch}{1.5}
 \begin{tabular}{|l|c|c|c|} 
   \hline
-  \textbf{Sampler} & $\B{M}$ & $\B{N}$ & $\mathrm{cov}(\tilde{\B{z}}') = \tilde{\B{M}}$ \\
+  \textbf{Sampler} & $\B{M}$ & $\B{N}$ & $\text{cov}(\tilde{\B{z}}') = \tilde{\B{M}}$ \\
   \hline 
   Hogwild with blocks of size 1 & $\B{D}$ & $-\B{L} - \B{L}^{\top}$ & $\B{D}$ \\ 
   Clone MCMC & $\B{D} + 2\omega\B{I}_d$ & $2\omega\B{I}_d -\B{L} - \B{L}^{\top}$ & $2\pr{\B{D}+ 2\omega\B{I}_d}$\\[0.3em]
@@ -527,7 +528,7 @@ $$
 }
 \end{table}
 \[
-\widetilde{\B{Q}}_{\mathrm{MS}} =
+\widetilde{\B{Q}}_{\text{MS}} =
 \begin{cases}
 \B{Q}\pr{\B{I}_d - \B{D}^{-1}(\B{L}+\B{L}^{\top})} & \text{for the Hogwild sampler}\\
 \B{Q}\pr{\B{I}_d - \frac{1}{2}(\B{D} + 2\omega^{-1}\B{I}_d)^{-1}\B{Q}} & \text{for clone MCMC.}
@@ -547,7 +548,115 @@ $$
 
 \subsection{Experiments}
 \begin{frame}
+\frametitle{Settings}
+\begin{figure}
+  \begin{tikzpicture}
+    \draw[style=help lines,thick] (0,0) grid[step=1] (5,5);
+    \foreach \x in {0,1,...,5}
+    {
+      \foreach \y in {0,1,...,5}
+        {
+          \node[draw,circle,inner sep=2pt,fill] at (1*\x,1*\y) {};
+        }
+    }
+    \foreach \x in {0,1,...,4}
+    {
+      \foreach \y in {0,1,...,4}
+      {
+        \draw (\x,\y) -- (\x+1,\y+1);
+      }
+    }
+        \foreach \x in {0,1,...,4}
+    {
+      \foreach \y in {1,2,...,5}
+      {
+        \draw (\x,\y) -- (\x+1,\y-1);
+      }
+    }
+    \node[draw,circle,inner sep=2pt,fill=blue] at (2,5) {};
+    \node[draw,circle,inner sep=2pt,fill=green] at (1,5) {};
+    \node[draw,circle,inner sep=2pt,fill=green] at (3,5) {};
+    \node[draw,circle,inner sep=2pt,fill=green] at (2,4) {};
+    \node[draw,circle,inner sep=2pt,fill=green] at (1,4) {};
+    \node[draw,circle,inner sep=2pt,fill=green] at (3,4) {};
+    \node at (5,-0.5) {$\sqrt{d}$};
+    \node at (2.5,-0.5) {$\hdots$};
+    \node at (0,-0.5) {1};
+    \node at (-0.5,0) {1};
+    \node at (-0.5,2.5) {$\vdots$};
+    \node at (-0.5,5) {$\sqrt{d}$};
+  \end{tikzpicture}
+  \mbox{{\includegraphics[scale=0.7]{src/images/simu2_ex1_A_phi_1.pdf}}}
+\end{figure}
 \end{frame}
+
+\begin{frame}
+  \frametitle{Impact of \(\phi\)}
+  \[\B{Q} = \B{I}_d + \phi \B{L}.\]
+  \begin{figure}
+    \mbox{{\includegraphics[scale=0.43]{src/images/simu2_ex1_invA_phi_0.pdf}}}
+    \mbox{{\includegraphics[scale=0.43]{src/images/simu2_ex1_invA_phi_1.pdf}}}
+    \mbox{{\includegraphics[scale=0.43]{src/images/simu2_ex1_invA_phi_10.pdf}}}
+  \caption{$\B{Q}^{-1}=\B{\Sigma}$ for $\phi \in \{0.1,1,10\}$. $d=100$.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Accuracy Results}
+  \begin{figure}
+    \mbox{{\includegraphics[scale=0.19]{src/images/simus2_ex1_convGibbs_phi_1_bis.pdf}}}
+    \mbox{{\includegraphics[scale=0.19]{src/images/simus2_ex1_convGibbs_phi_10_bis.pdf}}}
+    \caption{Relative error associated to the estimation of the covariance matrix $\B{Q}^{-1}$ defined by $\|\B{Q}^{-1} - \text{var}(\boldsymbol{\theta}^{(1:t)})\|_2/\|\B{Q}^{-1}\|_2$  w.r.t. the number of iterations $t$, with $d=100$ (left: $\phi=1$, right: $\phi=10$). }
+  \end{figure}
+\end{frame}
+
+% \begin{frame}
+%   \frametitle{CPU Time Results}
+%   \begin{table}
+%     {\footnotesize
+%     \caption{Comparison between Cholesky, Chebyshev and MS-based Gibbs samplers for $d=100$.}
+%     \begin{center}
+%       \begin{tabular}{|cl|c|c|c|c|c|} 
+%         \hline
+%          \multicolumn{2}{|c|}{\textbf{Sampler}} & $\phi$ & $\omega$ & $\rho(\B{M}^{-1}\B{N})$ & $T$ & \textbf{CPU time [s]}\\
+%         \hline 
+%         \multicolumn{2}{|c|}{\multirow{3}{*}{Cholesky}} & 0.1 & -  & - & $6.3 \times 10^4$ & 0.29\\
+%         && 1 & -  & - & $1.3 \times 10^4$ & 0.06\\
+%         && 10 & -  & - & $2.9 \times 10^3$ & 0.01\\
+%         \hline
+%         \multicolumn{2}{|c|}{\multirow{3}{*}{Chebyshev ($K=21$)}} & 0.1 & -  & - & $6.4 \times 10^4$ & 2.24\\
+%         && 1 & -  & - & $1.3 \times 10^4$ & 0.44\\
+%         && 10 & -  & - & $2.5 \times 10^3$ & 0.19\\
+%         \hline      
+%         \multirow{18}{*}{\rotatebox{90}{MCMC MS-based samplers}} & \multicolumn{1}{|c|}{} & 0.1 & 0.6328  & 0.3672 & $6.7 \times 10^4$ & 5.44\\
+%         &\multicolumn{1}{|c|}{Richardson}& 1 & 0.1470  & 0.8530 & $3.8 \times 10^4$ & 3.03\\
+%         &\multicolumn{1}{|c|}{}& 10 & 0.0169 & 0.9831 & $4 \times 10^4$ & 3.31\\
+%         \cline{2-7}
+%         &\multicolumn{1}{|c|}{} & 0.1 & -  & 0.4235 & $6.8 \times 10^4$ & 5.72\\
+%         &\multicolumn{1}{|c|}{Jacobi}& 1 & - & 0.8749 & $3.9 \times 10^4$ & 3.24\\
+%         &\multicolumn{1}{|c|}{}& 10 & - & 0.9856 & $4.6 \times 10^4$ & 3.69\\
+%         \cline{2-7}
+%         &\multicolumn{1}{|c|}{} & 0.1 & -  & 0.1998 & $6.5 \times 10^4$ & 8.48\\
+%         &\multicolumn{1}{|c|}{Gauss-Seidel}& 1 & -  & 0.7677 & $2.5 \times 10^4$ & 3.34\\
+%         &\multicolumn{1}{|c|}{}& 10 & -  & 0.9715 & $2.5 \times 10^4$ & 3.32\\
+%         \cline{2-7}
+%         &\multicolumn{1}{|c|}{} & 0.1 & 1.0494  & 0.1189 & $6.4 \times 10^4$ & 8.40\\
+%         &\multicolumn{1}{|c|}{SOR}& 1 & 1.3474  & 0.4726 & $1.6 \times 10^4$ & 1.31\\
+%         &\multicolumn{1}{|c|}{}& 10 & 1.7110  & 0.7852 & $5.4 \times 10^3$ & 0.71\\
+%         \cline{2-7}
+%         &\multicolumn{1}{|c|}{} & 0.1 & 0.9644  & 0.0936 & $6.4 \times 10^4$ & 19.65\\
+%         &\multicolumn{1}{|c|}{SSOR}& 1 & 1.3331  & 0.4503 & $1.6 \times 10^4$ & 4.91\\
+%         &\multicolumn{1}{|c|}{}& 10 & 1.7101  & 0.9013 & $9.3 \times 10^3$ & 2.86\\
+%         \cline{2-7}
+%         &\multicolumn{1}{|c|}{} & 0.1 & 0.9644  & 0.0246 & $6.3 \times 10^4$ & 9.17\\
+%         &\multicolumn{1}{|c|}{Cheby-SSOR}& 1 & 1.3331  & 0.1485 & $1.3 \times 10^4$ & 1.89\\
+%         &\multicolumn{1}{|c|}{}& 10 & 1.7101  & 0.5213 & $4.5 \times 10^3$ & 0.65\\
+%         \hline
+%       \end{tabular}    
+%     \end{center}
+%     }
+%   \end{table}
+% \end{frame}
 
 \section{Data Augmentation}
 \subsection{Exact Data Augmentation}
@@ -630,6 +739,97 @@ GEDA introduces an additional auxiliary variable $\B{u}_2$ such that the augment
 \end{table}
 \end{frame}
 
+\subsection{Experiments}
+\begin{frame}
+  \frametitle{Example}
+  Consider Gaussian sampling problems in high dimensions $d \in [10^4,10^6]$: Cholesky factorization both computationally and memory prohibitive.
+
+Common sampling problem in image processing and linear inverse problem, usually called {\em deconvolution} or {\em deblurring} in image processing:
+\[\B{y} = \B{S}\Bs{\theta} + \Bs{\varepsilon},\]
+  
+where $\B{y} \in \mathbb{R}^d$ blurred and noisy observation, $\Bs{\theta} \in \mathbb{R}^d$ is the unknown original image, $\Bs{\varepsilon} \sim \mathcal{N}(\B{0}_d,\B{\Gamma})$ with $\B{\Gamma} = \text{diag}(\gamma_1,\hdots,\gamma_d)$ a synthetic structured noise such that $\gamma_i \sim 0.7\delta_{\kappa_1} + 0.3\delta_{\kappa_2}$, for all $i \in [d]$. $\B{S} \in \mathbb{R}^{d \times d}$ circulant convolution matrix associated to the space-invariant box blurring kernel $\frac{1}{9}\B{1}_{3 \times 3}$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Prior and Posterior}
+  Smoothing conjugate prior:
+  \[\Bs{\theta} \sim \mathcal{N}(\B{0}_d, (\frac{\xi_0}{d}\B{1}_{d \times d} +  \xi_1\B{\Delta}^{\top}\B{\Delta})^{-1}), \] 
+  where $\B{\Delta}$ is the discrete two-dimensional Laplacian operator; $\xi_0 = 1$ ensures that this prior is non-intrinsic while $\xi_1 = 1$ controls the smoothing.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Prior and Posterior}
+  Gaussian posterior:
+  \[\Bs{\theta} \mid \B{y} \sim \mathcal{N}\pr{\Bs{\mu},\B{Q}^{-1}},\]
+  where
+  \[\begin{aligned}
+    \B{Q} &= \B{S}^{\top}\B{\Gamma}^{-1}\B{S} + \dfrac{\xi_0}{d}\B{1}_{d \times d} + \xi_1\B{\Delta}^{\top}\B{\Delta},\\
+    \Bs{\mu} &= \B{Q}^{-1}\B{S}^{\top}\B{\Delta}^{-1}\B{y}.
+  \end{aligned}\]
+  Decompose $\B{Q} = \B{Q}_1 + \B{Q}_2$ with $\B{Q}_1 = \B{S}^{\top}\B{\Gamma}^{-1}\B{S}$ and $\B{Q}_2 = \frac{\xi_0}{d}\B{1}_{d \times d} + \xi_1\B{\Delta}^{\top}\B{\Delta}$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Circulant (Toeplitz) Matrix}
+  $\B{Q}$ is a block circulant matrix with circulant blocks,
+\begin{equation}
+  \B{Q} = \begin{pmatrix}
+          \B{Q}_1 & \B{Q}_2 & \hdots & \B{Q}_M \\
+          \B{Q}_M & \B{Q}_1 & \hdots & \B{Q}_{M-1} \\
+          \vdots & \vdots & \vdots & \vdots \\
+          \B{Q}_2 & \B{Q}_{3} & \hdots & \B{Q}_1
+          \end{pmatrix},
+\end{equation}
+where $\{\B{Q}_{i}\}_{i \in [M]}$ are $M$ circulant matrices.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Circulant (Toeplitz) Matrix}
+\begin{figure}
+  \centering
+  \mbox{{\includegraphics[scale=0.17]{src/images/circulant_filter.pdf}}}
+  \mbox{{\includegraphics[scale=0.17]{src/images/circulant_DTD.pdf}}}
+  \mbox{{\includegraphics[scale=0.17]{src/images/circulant_Four.pdf}}}
+  \caption{From left to right: example of a $3 \times 3$ Laplacian filter, the associated circulant precision matrix $\B{Q} = \B{\Delta}^{\top}\B{\Delta}$ for convolution with periodic boundary conditions and its counterpart diagonal matrix $\B{FQF}^{\mathsf{H}}$ in the Fourier domain, where $\B{F}$ and its Hermitian conjugate $\B{F}^{\mathsf{H}}$ are unitary matrices associated with the Fourier and inverse Fourier transforms.}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Efficient Sampling of Block Circulant Matrix with Circulant Blocks}
+  \begin{algorithm}[H]
+    \caption{Sampler when $\B{Q}$ is a block circulant matrix with circulant blocks}
+    \hspace*{\algorithmicindent} \textbf{Input:} $M$ and $N$, the number of blocks and the size of each block, respectively.
+    \begin{algorithmic}[1]
+      \State Compute $\B{F} = \B{F}_M \otimes \B{F}_N$. \Comment{\textcolor{blue}{$\B{F}_M$ is the $M \times M$ unitary matrix associated to the Fourier transform and $\otimes$ denotes the tensor product.}}
+      \State Draw $\B{z} \sim \mathcal{N}(\B{0}_d,\B{I}_d)$.
+      \State Set $\B{\Lambda}_{\B{q}} = \mathrm{diag}(\B{q})$. \Comment{\textcolor{blue}{$\B{q}$ is the $d$-dimensional vector built by stacking the first columns of each circulant block of $\B{Q}$.}}
+        \State Set $\Bs{\theta} = \Bs{\mu} + \B{F}^{\mathsf{H}}\B{\Lambda}_{\B{q}}^{-1/2}\B{Fz}$.\\
+      \Return $\Bs{\theta}$.
+    \end{algorithmic}
+  \end{algorithm}
+  Computational complexity: $\mathcal{O}(d\log(d))$.\\
+  Memory requirement: $\Theta(d)$.
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Compare Efficiency using ESSR}
+  Effective sample size ratio per second (ESSR): For a MCMC sampler, the ESSR gives an estimate of the equivalent number of i.i.d. samples that can be drawn in one second.
+  \[  \text{ESSR}(\vartheta) = \dfrac{1}{T_1}\dfrac{\text{ESS}(\vartheta)}{T} =  \dfrac{1}{T_1\pr{1 + 2 \displaystyle\sum_{t=1}^\infty \rho_t(\vartheta)}},\]
+  where $T_1$ is the CPU time in seconds required to draw one sample and $\rho_t(\vartheta)$ is the lag-$t$ autocorrelation of a scalar parameter $\vartheta$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Results}
+  \begin{figure}
+    \mbox{{\includegraphics[scale=0.45]{src/images/simu3_ESS_bis.pdf}}}
+    \mbox{{\includegraphics[scale=0.45]{src/images/simu3_acf.pdf}}}
+    \caption{(left) ESS ratio per second (ESSR); (right) autocorrelation function $\rho_t$ shown for $d=10^4$.
+    For both figures, we used the slowest component of $\Bs{\theta}$ as the scalar summary $\vartheta$.}
+  \label{fig:scenario_3_results}
+  \end{figure}
+\end{frame}
+
 \section{Unifying Approach}
 \subsection{Unifying Proposal Distribution}
 \begin{frame}
@@ -640,8 +840,8 @@ Common form of surrogate p.d.f.:
   where $\B{u} \in \mathbb{R}^d$ auxiliary variable, $\B{R} \in \mathbb{R}^{d \times d}$ is a symmetric preconditioner.
 
 Restrict $\B{R}$ to be positive definite,
-\[  \int_{\mathbb{R}^d} \pi(\Bs{\theta},\B{u}) \mathrm{d}\B{u} = Z^{-1}\pi(\Bs{\theta})\int_{\mathbb{R}^d} \exp\pr{-\frac{1}{2}(\Bs{\theta}-\B{u})^{\top}\B{R}(\Bs{\theta}-\B{u})}\mathrm{d}\B{u} = \pi(\Bs{\theta})\]
-holds almost surely with $Z = \mathrm{det}(\B{R})^{-1/2}(2\pi)^{d/2}$.
+\[  \int_{\mathbb{R}^d} \pi(\Bs{\theta},\B{u}) \text{d}\B{u} = Z^{-1}\pi(\Bs{\theta})\int_{\mathbb{R}^d} \exp\pr{-\frac{1}{2}(\Bs{\theta}-\B{u})^{\top}\B{R}(\Bs{\theta}-\B{u})}\text{d}\B{u} = \pi(\Bs{\theta})\]
+holds almost surely with $Z = \text{det}(\B{R})^{-1/2}(2\pi)^{d/2}$.
 \end{frame}
 
 \begin{frame}
@@ -680,9 +880,9 @@ Rewrite the Gibbs sampling steps as an auto-regressive process of order \(1\) w.
     {\renewcommand{\arraystretch}{1.5}
     \begin{tabular}{|c|c|c|c|c|} 
       \hline
-      $\B{R}=\mathrm{cov}(\B{v}|\Bs{\theta})$ 
-      & $(\B{Q} + \B{R})^{-1}=\mathrm{cov}(\Bs{\theta}|\B{v})$ 
-      & $\B{M}^{\top} + \B{N}=\mathrm{cov}(\tilde{\B{z}})$ 
+      $\B{R}=\text{cov}(\B{v}|\Bs{\theta})$ 
+      & $(\B{Q} + \B{R})^{-1}=\text{cov}(\Bs{\theta}|\B{v})$ 
+      & $\B{M}^{\top} + \B{N}=\text{cov}(\tilde{\B{z}})$ 
       & DA sampler & MS sampler \\
       \hline 
       $\dfrac{\B{I}_d}{\omega} - \B{Q}_1$ 
