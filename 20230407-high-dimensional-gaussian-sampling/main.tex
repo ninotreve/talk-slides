@@ -3,6 +3,7 @@
 
 \usepackage{amsmath, amssymb}
 \usepackage{algorithm,algorithmicx,algpseudocode}
+\usepackage{multirow}
 \usepackage{tikz}
 \usetikzlibrary{matrix,decorations.pathmorphing,calc,decorations.pathreplacing,topaths,fit,positioning,automata,patterns,arrows,shapes,chains}
 \tikzstyle{line} = [draw, -latex']
@@ -190,7 +191,7 @@ Conditional posterior distribution associated to $\Bs{\theta}$: Gaussian with pr
 \end{figure}
 \end{frame}
 
-\section{Sampling Algorithms Derived From Numerical Algebra}
+\section{Sampling Algorithms From NLA}
 \subsection{Polynomial Approximation}
 \begin{frame}
 \frametitle{Square Root Factorization}
@@ -356,7 +357,7 @@ $a = 1.5$ and $\epsilon = 10^{-6}$, small eigenvalues of $\B{\Sigma}$ clustered 
   \end{figure}
 \end{frame}
 
-\section{Sampling Algorithms Based On MCMC}
+\section{Sampling Algorithms From MCMC}
 \subsection{Matrix Splitting}
 \begin{frame}
 \frametitle{Conditional Gaussian Distribution}
@@ -456,7 +457,7 @@ Given a linear system $\B{Q}\Bs{\theta} = \B{v}$ and linear solvers based on the
 The error at iteration $t$,
 \[\B{e}^{(t+1)} = \Bs{\theta}^{(t+1)} - \B{Q}^{-1}\B{v},\]
 is equal to 
-\[(\B{I}_d-\B{M}^{-1}\B{Q})^t\B{e}^{(0)}.\]
+\[\B{e}^{(t+1)} = (\B{I}_d-\B{M}^{-1}\B{Q})^t\B{e}^{(0)}.\]
 
 Can we find another $t$-th order polynomial $\mathsf{P}_t$ that achieves a lower error?
 \[\rho(\mathsf{P}_t(\B{M}^{-1}\B{Q})) < \rho((\B{I}_d-\B{M}^{-1}\B{Q})^t).\]
@@ -508,8 +509,32 @@ $$
 \end{algorithm}
 \end{frame}
 
+\begin{frame}
+\frametitle{Approximate Matrix Splitting Samplers}
+\begin{table}
+{
+\begin{center}
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|c|c|c|} 
+  \hline
+  \textbf{Sampler} & $\B{M}$ & $\B{N}$ & $\mathrm{cov}(\tilde{\B{z}}') = \tilde{\B{M}}$ \\
+  \hline 
+  Hogwild with blocks of size 1 & $\B{D}$ & $-\B{L} - \B{L}^{\top}$ & $\B{D}$ \\ 
+  Clone MCMC & $\B{D} + 2\omega\B{I}_d$ & $2\omega\B{I}_d -\B{L} - \B{L}^{\top}$ & $2\pr{\B{D}+ 2\omega\B{I}_d}$\\[0.3em]
+  \hline
+\end{tabular}}
+\end{center}
+}
+\end{table}
+\[
+\widetilde{\B{Q}}_{\mathrm{MS}} =
+\begin{cases}
+\B{Q}\pr{\B{I}_d - \B{D}^{-1}(\B{L}+\B{L}^{\top})} & \text{for the Hogwild sampler}\\
+\B{Q}\pr{\B{I}_d - \frac{1}{2}(\B{D} + 2\omega^{-1}\B{I}_d)^{-1}\B{Q}} & \text{for clone MCMC.}
+\end{cases}    \]
+\end{frame}
+
 \subsection{Summary}
-\section{Data Augmentation}
 \begin{frame}
 \frametitle{Iterative Sampler or MCMC Sampler?}
 \begin{itemize}
@@ -520,15 +545,200 @@ $$
 \end{itemize}
 \end{frame}
 
+\subsection{Experiments}
+\begin{frame}
+\end{frame}
+
 \section{Data Augmentation}
+\subsection{Exact Data Augmentation}
 \begin{frame}
-\frametitle{1}
+\frametitle{Idea}
+\begin{itemize}
+\item \(\B{Q} = \B{Q}_1 + \B{Q}_2\) directly from the statistical model under construction.
+\item Introduce one (or several) auxiliary variable $\B{u} \in \mathbb{R}^k$. $(\Bs{\theta},\B{u})$ simple conditional distributions, then use Gibbs sampler.
+\item Marginalization of $\B{u}$, retrieves the target distribution $\mathcal{N}(\Bs{\mu},\B{Q}^{-1})$: \[\int_{\mathbb{R}^k} \pi(\Bs{\theta},\B{u}) = \pi(\Bs{\theta}).\]
+\end{itemize}
 \end{frame}
 
-\section{Unifying Approach Based On Stochastic PPA}
-\subsection{PPA}
 \begin{frame}
-\frametitle{1}
+\frametitle{EDA Model}
+  Assume that $\B{Q}_2$ presents a particular and simpler structure (e.g., diagonal or circulant) than $\B{Q}_1$. 
+
+  Introduces the joint distribution with p.d.f.
+\[
+    \pi(\Bs{\theta},\B{u}_1) \propto \exp\pr{-\dfrac{1}{2}\br{(\Bs{\theta}-\Bs{\mu})^{\top}\B{Q}(\Bs{\theta}-\Bs{\mu}) + (\B{u}_1-\Bs{\theta})^{\top}\B{R}(\B{u}_1-\Bs{\theta})}},
+\]
+  with $\B{R} = \omega^{-1}\B{I}_d - \B{Q}_1$ and $0< \omega < \nr{\B{Q}_1}^{-1}$, where $\nr{\cdot}$ is the spectral norm. 
+  
+$\B{Q}_1$ and $\B{Q}_2$ decoupled.
 \end{frame}
 
+\begin{frame}
+  \frametitle{GEDA Model}
+When $\B{Q}$ from a hierarchical Bayesian model, $\B{Q}_1 = \B{G}_1^{\top}\Bs{\Lambda}_1\B{G}_1$, where $\Bs{\Lambda}_1$ is a positive definite (and very often diagonal) matrix.
+  
+GEDA introduces an additional auxiliary variable $\B{u}_2$ such that the augmented p.d.f.\ writes
+\[
+  \begin{aligned}
+    \pi(\Bs{\theta},\B{u}_1,\B{u}_2) &\propto \exp\pr{-\dfrac{1}{2}\br{(\Bs{\theta}-\Bs{\mu})^{\top}\B{Q}(\Bs{\theta}-\Bs{\mu}) + (\B{u}_1-\Bs{\theta})^{\top}\B{R}(\B{u}_1-\Bs{\theta})}}, \\
+    &\times \exp\pr{-\dfrac{1}{2}(\B{u}_2-\B{G}_1\B{u}_1)^{\top}\B{\Lambda}_1(\B{u}_2-\B{G}_1\B{u}_1)}.
+  \end{aligned}
+\]
+\end{frame}
+
+\begin{frame}
+\frametitle{Algorithm of (G)EDA}
+\begin{algorithm}[H]
+\caption{Gibbs sampler based on exact data augmentation (G)EDA}
+\label{algo:exact_DA}
+\hspace*{\algorithmicindent} \textbf{Input:} Number $T$ of iterations and initialization $\Bs{\theta}^{(0)}$, $\B{u}_1^{(0)}$.
+\begin{algorithmic}[1]
+\State Set $t = 1$.
+\While{$t\leq T$}
+\State Draw $\B{u}_2^{(t)} \sim \mathcal{N}(\Bs{\mu}_{\B{u}_2},\B{Q}_{\B{u}_2}^{-1})$. \Comment{\textcolor{blue}{Only if GEDA is considered.}}
+\State Draw $\B{u}_1^{(t)} \sim \mathcal{N}(\Bs{\mu}_{\B{u}_1},\B{Q}_{\B{u}_1}^{-1})$.
+\State Draw $\Bs{\theta}^{(t)} \sim \mathcal{N}(\Bs{\mu}_{\Bs{\theta}},\B{Q}_{\Bs{\theta}}^{-1})$.
+\State Set $t = t + 1$.
+\EndWhile\\
+\Return $\Bs{\theta}^{(T)}$.
+\end{algorithmic}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparison of EDA and GEDA}
+\begin{table}
+{\scriptsize
+\begin{center}
+{\renewcommand{\arraystretch}{2}
+\begin{tabular}{|l|c|c|c|} 
+  \hline
+  \textbf{Sampler} & $\Bs{\theta} \sim \mathcal{N}(\Bs{\mu}_{\Bs{\theta}},\B{Q}_{\Bs{\theta}}^{-1})$ & $\B{u}_1 \sim \mathcal{N}(\Bs{\mu}_{\B{u}_1},\B{Q}_{\B{u}_1}^{-1})$ & $\B{u}_2  \sim \mathcal{N}(\Bs{\mu}_{\B{u}_2},\B{Q}_{\B{u}_2}^{-1})$ \\
+  \hline 
+  \multirow{3}{*}{EDA} & $\B{Q}_{\Bs{\theta}} = \omega^{-1}\B{I}_d + \B{Q}_2$ & $\B{Q}_{\B{u}_1} = \B{R}$ & - \\
+  & $\Bs{\mu}_{\Bs{\theta}} = \B{Q}_{\Bs{\theta}}^{-1}\pr{\B{R}\B{u}_1 + \B{Q}\Bs{\mu}}$ & $\Bs{\mu}_{\B{u}_1} = \Bs{\theta}$ & - \\[0.3em]
+  \hline
+  \multirow{3}{*}{GEDA} 
+  & $\B{Q}_{\Bs{\theta}} = \omega^{-1}\B{I}_d + \B{Q}_2$ 
+  & $\B{Q}_{\B{u}_1} = \omega^{-1}\B{I}_d$ & $\B{Q}_{\B{u}_2} = \B{\Lambda}_1$ \\
+  & $\Bs{\mu}_{\Bs{\theta}} = \B{Q}_{\Bs{\theta}}^{-1}(\B{R}\B{u}_1 + \B{Q}\Bs{\mu})$ 
+  & $\Bs{\mu}_{\B{u}_1} = \Bs{\theta} - \omega(\B{Q}_1\Bs{\theta} -\B{G}_1^{\top}\B{\Lambda}_1^{-1}\B{u}_2)$ & $\Bs{\mu}_{\B{u}_2} = \B{G}_1\B{u}_1$ \\[0.3em]
+  \hline
+\end{tabular}}
+\end{center}
+}
+\end{table}
+\end{frame}
+
+\section{Unifying Approach}
+\subsection{Unifying Proposal Distribution}
+\begin{frame}
+\frametitle{Surrogate Probability Distribution}
+Common form of surrogate p.d.f.:
+\[
+  \kappa(\Bs{\theta},\B{u}) \propto \pi(\Bs{\theta})\exp\pr{-\frac{1}{2}(\Bs{\theta}-\B{u})^{\top}\B{R}(\Bs{\theta}-\B{u})}\]
+  where $\B{u} \in \mathbb{R}^d$ auxiliary variable, $\B{R} \in \mathbb{R}^{d \times d}$ is a symmetric preconditioner.
+
+Restrict $\B{R}$ to be positive definite,
+\[  \int_{\mathbb{R}^d} \pi(\Bs{\theta},\B{u}) \mathrm{d}\B{u} = Z^{-1}\pi(\Bs{\theta})\int_{\mathbb{R}^d} \exp\pr{-\frac{1}{2}(\Bs{\theta}-\B{u})^{\top}\B{R}(\Bs{\theta}-\B{u})}\mathrm{d}\B{u} = \pi(\Bs{\theta})\]
+holds almost surely with $Z = \mathrm{det}(\B{R})^{-1/2}(2\pi)^{d/2}$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{From Exact Data Augmentation to Exact Matrix Splitting}
+Change of variable $\B{v} = \B{Ru}$,
+\[
+  \begin{aligned}
+    \B{v}\mid\Bs{\theta} &\sim \mathcal{N}\pr{\B{R}\Bs{\theta},\B{R}},\\
+    \Bs{\theta}\mid\B{v} &\sim \mathcal{N}\pr{(\B{Q} + \B{R})^{-1}(\B{v}+\B{Q}\Bs{\mu}),(\B{Q} + \B{R})^{-1}}.
+  \end{aligned}  
+\]
+Rewrite the Gibbs sampling steps as an auto-regressive process of order \(1\) w.r.t.\ $\Bs{\theta}$, the sampling strategy is equivalently
+\[
+\begin{aligned}
+  \tilde{\B{z}} &\sim  \mathcal{N}\pr{\B{Q}\Bs{\mu}, 2\B{R} + \B{Q}},\\
+  \Bs{\theta}^{(t)} & = \pr{\B{Q}+\B{R}}^{-1}\pr{\tilde{\B{z}}+\B{R}\Bs{\theta}^{(t-1)}}.
+\end{aligned} 
+\]
+\end{frame}
+
+\begin{frame}
+  \frametitle{From Exact Data Augmentation to Exact Matrix Splitting (Cont.d)}
+  Define $\B{M} = \B{Q}+\B{R}$ and $\B{N} = \B{R}$, 
+  \[
+    \begin{aligned}
+      \tilde{\B{z}} & \sim  \mathcal{N}\pr{\B{Q}\Bs{\mu}, \B{M}^{\top} + \B{N}},
+      \Bs{\theta}^{(t)} & =  \B{M}^{-1}\pr{\tilde{\B{z}} + \B{N}\Bs{\theta}^{(t-1)}},
+    \end{aligned} 
+    \]
+  which boils down to the Gibbs sampler based on exact MS.
+  
+\begin{table}
+{\footnotesize
+  \caption{Equivalence relations between exact DA and exact MS approaches.} 
+  \begin{center}
+    {\renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|c|c|c|c|c|} 
+      \hline
+      $\B{R}=\mathrm{cov}(\B{v}|\Bs{\theta})$ 
+      & $(\B{Q} + \B{R})^{-1}=\mathrm{cov}(\Bs{\theta}|\B{v})$ 
+      & $\B{M}^{\top} + \B{N}=\mathrm{cov}(\tilde{\B{z}})$ 
+      & DA sampler & MS sampler \\
+      \hline 
+      $\dfrac{\B{I}_d}{\omega} - \B{Q}_1$ 
+      & $\pr{\dfrac{\B{I}_d}{\omega} + \B{Q}_2}^{-1}$ 
+      & $\dfrac{2\B{I}_d}{\omega} + \B{Q}_2 - \B{Q}_1$ 
+      & EDA& Richardson  \\
+      $\dfrac{\B{D}_1}{\omega} - \B{Q}_1$ 
+      & $\pr{\dfrac{\B{D}_1}{\omega} + \B{Q}_2}^{-1}$ 
+      & $\dfrac{2\B{D}_1}{\omega} + \B{Q}_2 - \B{Q}_1$ 
+      & {\bf EDAJ} & Jacobi\\[1em]
+      \hline
+    \end{tabular}}
+  \end{center}
+}
+\end{table}
+\end{frame}
+
+\subsection{Gibbs Samplers as Stochastic Versions of PPA}
+\begin{frame}
+\frametitle{Proximal point algorithm (PPA)}
+\begin{algorithm}[H]
+\caption{PPA}
+\begin{algorithmic}[1]
+\State Choose an initial value $\Bs{\theta}^{(0)}$, a positive semi-definite matrix $\B{R}$ and a maximal number of iterations $T$.
+\State Set $t=1$.
+\While{$t\leq T$}
+\State $\Bs{\theta}^{(t)} = \underset{\Bs{\theta}\in\mathbb{R}^d}{\arg \min}\ f(\Bs{\theta}) + \dfrac{1}{2}\nr{\Bs{\theta}-\Bs{\theta}^{(t-1)}}_{\B{R}}^2$.
+\EndWhile\\
+\Return $\Bs{\theta}^{(T)}$.
+\end{algorithmic}
+\end{algorithm}
+Here \(\nr{\Bs{\theta}}_{\B{R}}^2 \triangleq {\Bs{\theta}^{\top}\B{R}\Bs{\theta}}\) defines the \textit{weighted} norm w.r.t. $\B{R}$ for all $\Bs{\theta} \in \mathbb{R}^d$.
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Revisit Unifying Proposal Distribution}
+Recap: \[
+  \kappa(\Bs{\theta},\B{u}) \propto \pi(\Bs{\theta})\exp\pr{-\frac{1}{2}(\Bs{\theta}-\B{u})^{\top}\B{R}(\Bs{\theta}-\B{u})}.\]
+
+Define $\B{u} = \Bs{\theta}^{(t-1)}$, then
+\[
+    \kappa(\Bs{\theta},\B{u}) \triangleq p\pr{\Bs{\theta}|\B{u}=\Bs{\theta}^{(t-1)}} \propto \pi(\Bs{\theta})\exp\pr{-\frac{1}{2}\pr{\Bs{\theta}-\Bs{\theta}^{(t-1)}}^{\top}\B{R}\pr{\Bs{\theta}-\Bs{\theta}^{(t-1)}}}. 
+\]
+
+PPA is its deterministic version!
+\end{frame}
+
+\begin{frame}
+  \frametitle{Connection between Optimization and Simulation}
+  
+In fact, searching for the maximum a posteriori estimator under the proposal distribution $P(\cdot \mid \Bs{\theta}^{(t-1)})$ with density $p(\cdot \mid \Bs{\theta}^{(t-1)})$ boils down to solving 
+\[
+    \underset{\Bs{\theta}\in\mathbb{R}^d}{\arg \min}\ \underbrace{-\log\pi(\Bs{\theta})}_{f(\Bs{\theta})} + \dfrac{1}{2}\nr{\Bs{\theta}-\Bs{\theta}^{(t-1)}}_{\B{R}}^2.
+\]
+
+
+\end{frame}
 \end{document}
