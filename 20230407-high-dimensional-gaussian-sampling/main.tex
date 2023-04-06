@@ -47,7 +47,7 @@ Covariance matrix \(\B{\Sigma}\) positive definite. Precision matrix \(\B{Q}=\B{
 \begin{algorithm}[H]
 \caption{Box--Muller sampler}
 \begin{algorithmic}[1]
-\State Draw $u_1$, $u_2$ $\overset{\mathrm{i.i.d.}}{\sim} \mathcal{U}((0,1])$.
+\State Draw $u_1$, $u_2$ $\overset{\text{i.i.d.}}{\sim} \mathcal{U}((0,1])$.
 \State Set $\tilde{u}_1 = \sqrt{-2\log(u_1)}$.
 \State Set $\tilde{u}_2 = 2\pi u_2$.\\ 
 \Return $(\theta_1,\theta_2) = \pr{\mu + \frac{\tilde{u}_1}{\sqrt{q}} \sin(\tilde{u}_2),\mu + \frac{\tilde{u}_1}{\sqrt{q}} \cos(\tilde{u}_2)}$.
@@ -75,7 +75,7 @@ Covariance matrix \(\B{\Sigma}\) positive definite. Precision matrix \(\B{Q}=\B{
 \begin{algorithm}[H]
 \caption{Cholesky sampler}
 \begin{algorithmic}[1]
-\State Set $\B{C} = \mathrm{chol}(\B{Q})$.
+\State Set $\B{C} = \text{chol}(\B{Q})$.
 \Comment{\textcolor{blue}{$\B{Q} = \B{C}\B{C}^{\top}$}}
 \State Draw $\B{z} \sim \mathcal{N}(\B{0}_d,\B{I}_d)$.
 \State Solve $\B{C}^{\top}\B{w} = \B{z}$ w.r.t.\ $\B{w}$.\\
@@ -116,7 +116,7 @@ Improvement:
 \node (node00) [ellipse,draw=black,below left of=node0, node distance=3.5cm] {Accuracy};
 \path [line] (node0) -- node [midway,align=center,left=0.1em] {yes} (node00);
 
-\node (node01) [ellipse,draw=black,below right of=node0, node distance=2.5cm] {$T_{\mathrm{bi}} \ll K T$};
+\node (node01) [ellipse,draw=black,below right of=node0, node distance=2.5cm] {$T_{\text{bi}} \ll K T$};
 \path [line] (node0) -- node [midway,align=center,right=0.1em] {no} (node01);
 
 \node (node010) [ellipse,draw=black,below left of=node01, node distance=3cm] {Accuracy};
@@ -140,7 +140,7 @@ Improvement:
 \node (node000) [rectangle,draw=black,left of=node0100, node distance=2cm] {(G)EDA};
 \path [line] (node00) -- node [midway,align=center,right=0.1em] {} (node000);
 
-\node (node001) [ellipse,draw=black,below left of=node00, node distance=2cm] {$T_{\mathrm{bi}} \ll K T$};
+\node (node001) [ellipse,draw=black,below left of=node00, node distance=2cm] {$T_{\text{bi}} \ll K T$};
 \path [line] (node00) -- node [midway,align=center,left=0.1em] {limited} (node001);
 
 \node (node0011) [rectangle,draw=black,left of=node000, node distance=2cm] {PO};
@@ -208,9 +208,9 @@ Approximate \(f(\lambda_i) \approx 1/\sqrt{\lambda_i}, \quad \forall i \in [d]\)
 \begin{frame}
 \frametitle{Chebyshev Sampler}
 The change of interval:
-\[g_j = \br{\cos\pr{\pi\frac{2j+1}{2K_{\mathrm{cheby}}}}\dfrac{(\lambda_u-\lambda_l)}{2} + \dfrac{\lambda_u+\lambda_l}{2}}^{-1/2}, \quad j \in [0,K_{\mathrm{cheby}}].\]
+\[g_j = \br{\cos\pr{\pi\frac{2j+1}{2K_{\text{cheby}}}}\dfrac{(\lambda_u-\lambda_l)}{2} + \dfrac{\lambda_u+\lambda_l}{2}}^{-1/2}, \quad j \in [0,K_{\text{cheby}}].\]
 The Chebyshev coefficients:
-\[c_k = \dfrac{2}{K_{\mathrm{cheby}}} \displaystyle \sum_{j=0}^{K_{\mathrm{cheby}}} g_j \cos\pr{\pi k\frac{2j+1}{2K_{\mathrm{cheby}}}}, \quad k \in [0,K_{\mathrm{cheby}}]. \]
+\[c_k = \dfrac{2}{K_{\text{cheby}}} \displaystyle \sum_{j=0}^{K_{\text{cheby}}} g_j \cos\pr{\pi k\frac{2j+1}{2K_{\text{cheby}}}}, \quad k \in [0,K_{\text{cheby}}]. \]
 \end{frame}
 
 \begin{frame}
@@ -222,7 +222,7 @@ The Chebyshev coefficients:
 \State Set $\alpha = \dfrac{2}{\lambda_u-\lambda_l}$ and $\beta = \dfrac{\lambda_u+\lambda_l}{\lambda_u-\lambda_l}$.
 \State Initialize $\B{u}_1 = \alpha\B{Q z} - \beta\B{z}$ and $\B{u}_0 = \B{z}$. 
 \State Set $\B{u} = \dfrac{1}{2}c_0\B{u}_0 + c_1\B{u}_1$ and $k=2$.
-\While{$k \leq K_{\mathrm{cheby}}$} \Comment{\textcolor{blue}{Compute the $K_{\mathrm{cheby}}$-truncated Chebyshev series.}}
+\While{$k \leq K_{\text{cheby}}$} \Comment{\textcolor{blue}{Compute the $K_{\text{cheby}}$-truncated Chebyshev series.}}
 \State Compute $\B{u}' = 2(\alpha\B{Q}\B{u}_1 - \beta\B{u}_1) - \B{u}_0$.
 \State Set $\B{u} = \B{u} + c_k\B{u}'$.
 \State Set $\B{u}_0 = \B{u}_1$ and $\B{u}_1 = \B{u}'$.
@@ -272,7 +272,7 @@ Sequentially builds a Gaussian vector with a covariance matrix being the best $k
     \State Set $\B{y}^{(k)} = \B{y}^{(k-1)} + \dfrac{z}{\sqrt{d^{(k-1)}}}\B{h}^{(k-1)}$ where $z \sim \mathcal{N}(0,1)$. \Comment{\textcolor{blue}{Perturbation}} 
     \State $k = k + 1$.
     \EndWhile
-    \State Set $\Bs{\theta} = \Bs{\mu} + \B{y}^{(K_{\mathrm{CG}})}$ where $K_{\mathrm{CG}}$ is the number of CG iterations.\\
+    \State Set $\Bs{\theta} = \Bs{\mu} + \B{y}^{(K_{\text{CG}})}$ where $K_{\text{CG}}$ is the number of CG iterations.\\
 \Return $\Bs{\theta}$.
 \end{algorithmic}
 \end{frame}
@@ -302,7 +302,6 @@ Compare the above results with
 \frametitle{Gibbs Sampler}
 \begin{algorithm}[H]
 \caption{Component-wise Gibbs sampler}
-\label{algo:component_wise_Gibbs}
 \hspace*{\algorithmicindent} \textbf{Input:} Number $T$ of iterations and initialization $\Bs{\theta}^{(0)}$.
 \begin{algorithmic}[1]
 \State Set $t = 1$.
@@ -332,6 +331,23 @@ where $\B{N} = -\B{L}^{\top}$ is strictly upper triangular and $\tilde{\B{z}} \s
 \end{frame}
 
 \begin{frame}
+\frametitle{Matrix Splitting Sampler}
+\begin{algorithm}[H]
+\caption{MCMC sampler based on exact matrix splitting}
+\hspace*{\algorithmicindent} \textbf{Input:} Number $T$ of iterations, initialization $\Bs{\theta}^{(0)}$ and splitting $\B{Q} = \B{M} - \B{N}$.
+\begin{algorithmic}[1]
+\State Set $t=1$.
+\While{$t\leq T$}
+    \State Draw $\tilde{\B{z}} \sim \mathcal{N}(\B{0}_d,\B{M}^{\top} + \B{N})$.
+    \State Solve $\B{M}\Bs{\theta}^{(t)} = \B{Q}\Bs{\mu} + \tilde{\B{z}} + \B{N}\Bs{\theta}^{(t-1)} $ w.r.t. $\Bs{\theta}^{(t)}$.
+    \State Set $t = t + 1$.
+\EndWhile\\
+\Return $\Bs{\theta}^{(T)}$.
+\end{algorithmic}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
 \frametitle{Other Matrix Splitting Schemes}
 \begin{table}
 {\footnotesize
@@ -340,7 +356,7 @@ where $\B{N} = -\B{L}^{\top}$ is strictly upper triangular and $\tilde{\B{z}} \s
 {\renewcommand{\arraystretch}{1.5}
 \begin{tabular}{|l|c|c|c|c|} 
     \hline
-    \textbf{Sampler} & $\B{M}$ & $\B{N}$ & $\mathrm{cov}(\tilde{\B{z}}) = \B{M}^{\top} + \B{N}$ & convergence\\
+    \textbf{Sampler} & $\B{M}$ & $\B{N}$ & $\text{cov}(\tilde{\B{z}}) = \B{M}^{\top} + \B{N}$ & convergence\\
     \hline 
     Richardson & $\B{I}_d/\omega$ & $\B{I}_d/\omega - \B{Q}$ & $2\B{I}_d/\omega - \B{Q}$ & $0 < \omega < 2/\nr{\B{Q}}$\\ 
     Jacobi & $\B{D}$ & $\B{D} - \B{Q}$ & $2\B{D} - \B{Q}$ & $|Q_{ii}| > \sum_{j\neq i}|Q_{ij}|$ $\forall i \in [d]$\\
@@ -351,6 +367,66 @@ where $\B{N} = -\B{L}^{\top}$ is strictly upper triangular and $\tilde{\B{z}} \s
 \end{center}
 }
 \end{table}
+\end{frame}
+
+\begin{frame}
+\frametitle{Error of $t$-th Order Polynomial}
+Given a linear system $\B{Q}\Bs{\theta} = \B{v}$ and linear solvers based on the matrix splitting $\B{Q} = \B{M}-\B{N}$, consider the recursion,
+\[\Bs{\theta}^{(t+1)} = \Bs{\theta}^{(t)} +  \B{M}^{-1}(\B{v}-\B{Q}\Bs{\theta}^{(t)}).\]
+
+The error at iteration $t$,
+\[\B{e}^{(t+1)} = \Bs{\theta}^{(t+1)} - \B{Q}^{-1}\B{v},\]
+is equal to 
+\[(\B{I}_d-\B{M}^{-1}\B{Q})^t\B{e}^{(0)}.\]
+
+Can we find another $t$-th order polynomial $\mathsf{P}_t$ that achieves a lower error?
+\[\rho(\mathsf{P}_t(\B{M}^{-1}\B{Q})) < \rho((\B{I}_d-\B{M}^{-1}\B{Q})^t).\]
+\end{frame}
+
+\begin{frame}
+\frametitle{Polynomial Accelerated Solver}
+Consider the second-order iterative scheme, for any $t \in \mathbb{N}$, 
+$$
+\Bs{\theta}^{(t+1)} = \alpha_t\Bs{\theta}^{(t)} + (1-\alpha_t)\Bs{\theta}^{(t-1)} + \beta_t \B{M}^{-1}(\B{v}-\B{Q}\Bs{\theta}^{(t)}),
+$$
+where $(\alpha_t,\beta_t)_{t \in \mathbb{N}}$ are a set of acceleration parameters.
+
+This iterative method yields an error at step $t$ given by 
+\[\B{e}^{(t+1)}=\mathsf{P}_t(\B{M}^{-1}\B{Q})\B{e}^{(0)}, \]
+where $\mathsf{P}_t$ stands for a scaled Chebyshev polynomial.
+
+Optimal values for $(\alpha_t,\beta_t)_{t \in \mathbb{N}}$ are given by
+$$
+\alpha_t = \tau_1\beta_t  \quad \text{and} \quad \beta_t = \pr{\tau_1 - \tau_2^2\beta_{t-1}}^{-1} \ , 
+$$
+$\tau_1 = [\lambda_{\text{min}}(\B{M}^{-1}\B{Q}) + \lambda_{\text{max}}(\B{M}^{-1}\B{Q})]/2$ and $\tau_2 = [\lambda_{\text{max}}(\B{M}^{-1}\B{Q}) - \lambda_{\text{min}}(\B{M}^{-1}\B{Q})]/4$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Symmetric Splitting Scheme}
+Denote by $\B{M}_{\text{SOR}}$ and $\B{N}_{\text{SOR}}$ the matrices involved in the SOR splitting such that $\B{Q} = \B{M}_{\text{SOR}} - \B{N}_{\text{SOR}}$.
+
+Then for any $0<\omega<2$, the SSOR (symmetric SOR) splitting is defined by $\B{Q} = \B{M}_{\text{SSOR}} - \B{N}_{\text{SSOR}}$ with 
+$$
+\B{M}_{\text{SSOR}} = \frac{\omega}{2-\omega}\B{M}_{\text{SOR}}\B{D}^{-1}\B{M}_{\text{SOR}}^{\top} \quad \text{and} \quad \B{N}_{\text{SSOR}} = \frac{\omega}{2-\omega}\B{N}_{\text{SOR}}\B{D}^{-1}\B{N}_{\text{SOR}}^{\top} \ .
+$$
+\end{frame}
+
+\begin{frame}
+\frametitle{Approximate Matrix Splitting}
+\begin{algorithm}[H]
+\caption{MCMC sampler based on approximate matrix splitting}
+\hspace*{\algorithmicindent} \textbf{Input:} Number $T$ of iterations, initialization $\Bs{\theta}^{(0)}$ and splitting $\B{Q} = \B{M} - \B{N}$.
+\begin{algorithmic}[1]
+\State Set $t = 1$.
+\While{$t\leq T$}
+    \State Draw $\tilde{\B{z}}' \sim \mathcal{N}(\B{0}_d,\tilde{\B{M}})$.   \Comment{ {\textcolor{blue}{$\tilde{\B{M}}=\B{D}$ or $2\pr{\B{D}+ 2\omega\B{I}_d}$.}}}
+    \State Solve $\B{M}\Bs{\theta}^{(t)} = \B{Q}\Bs{\mu} + \tilde{\B{z}}' + \B{N}\Bs{\theta}^{(t-1)}$.
+    \State Set $t = t + 1$.
+\EndWhile\\
+\Return $\Bs{\theta}^{(T)}$.
+\end{algorithmic}
+\end{algorithm}
 \end{frame}
 
 \subsection{Data Augmentation}
